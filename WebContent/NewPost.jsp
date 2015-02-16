@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<title>Insert title here</title>
+<title>NewPost</title>
 </head>
 <body>
 
-<FORM ACTION="NewPostBoard" METHOD="post">
+<FORM name="form1" ACTION="NewPostBoard" METHOD="post" onSubmit="JavaScript:return fncSubmit();">
 		<center><br><h2>ตั้งกระทู้ใหม่</h2><BR><br></center>
 		<center><TABLE>
 		<TR><TD>ชื่อ</TD>
@@ -26,7 +26,33 @@
 				     <input class="btn btn-info" type="reset" value="เคลียร์">
 					</TR>
 		</TABLE>
-	</FORM></center>
+	</center></FORM>
+<script language="javascript">
+function fncSubmit()
+{
+	if(document.form1.param_name.value == "")
+	{
+		alert('มีชื่อไหม ถ้ามีก้อใส่ซะ');
+		document.form1.param_name.focus();
+		return false;
+	}	
+	if(document.form1.param_topic.value == "" )
+	{
+		alert('หัวข้อไม่ใส่จะมาตั้งกระทู้ทำเพื่อ');
+		document.form1.param_topic.focus();		
+		return false;
+	}
+	if(document.form1.param_desc.value == "")
+	{
+		alert('ใส่รายละเอียดด้วยนะ');
+		document.form1.param_desc.focus();
+		return false;
+	}	
+				
+	document.form1.submit();
+}
+
+</script>
 
 
 

@@ -57,9 +57,7 @@ public class NewPostBoard extends HttpServlet {
 		
 		
 		try {
-			Class.forName("org.gjt.mm.mysql.Driver").newInstance();
-			//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
-			//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
+			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery("select * from post");

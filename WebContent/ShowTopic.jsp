@@ -66,7 +66,7 @@
 		System.out.println(e);
 	}
 %>
-<FORM ACTION="PostReply" METHOD="post">
+<FORM  name="form1" ACTION="PostReply" METHOD="post" onSubmit="JavaScript:return fncSubmit();">
 		
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" href="AllTopic.jsp" role="button">ดูกระทู้ทั้งหมด</a>
 		<center><TABLE>
@@ -83,7 +83,27 @@
 	</TABLE></center>
 	<INPUT TYPE="hidden" NAME="id" VALUE="<%=request.getParameter("id")%>">
 </FORM>
-<BR>
+<script language="javascript">
+function fncSubmit()
+{
+	if(document.form1.param_name.value == "")
+	{
+		alert('มีชื่อไหม ถ้ามีก้อใส่ซะ');
+		document.form1.param_name.focus();
+		return false;
+	}	
+	
+	if(document.form1.param_desc.value == "")
+	{
+		alert('ใส่รายละเอียดด้วยนะ');
+		document.form1.param_desc.focus();
+		return false;
+	}	
+				
+	document.form1.submit();
+}
+
+</script>
  
 
 <script src="js/jquery.js"></script>

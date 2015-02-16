@@ -50,6 +50,11 @@
 			<location>C:/Users/Administrator/Desktop/bootstrap/js</location>
 		</link>
 		<link>
+			<name>WebContent/img/logo2.1.png</name>
+			<type>1</type>
+			<location>E:/Dw/image/logo/logo2.1.png</location>
+		</link>
+		<link>
 			<name>WebContent/WEB-INF/lib/javax.json-1.0.4.jar</name>
 			<type>1</type>
 			<location>C:/Users/Administrator/Desktop/php/mysql-connector-java-5.1.34/mysql-connector-java-5.1.34/javax.json-1.0.4.jar</location>
