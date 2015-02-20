@@ -13,7 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+
+import com.sun.corba.se.impl.util.Utility;
+
 import java.sql.*;
+
+import javazoom.upload.*;
 
 /**
  * Servlet implementation class NewPostBoard
@@ -35,7 +41,12 @@ public class NewPostBoard extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		performTask(request, response);
+		try {
+			performTask(request, response);
+		} catch (UploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -43,26 +54,50 @@ public class NewPostBoard extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		performTask(request, response);
+		try {
+			performTask(request, response);
+		} catch (UploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, UploadException{
 		
 		
+		MultipartFormDataRequest mrequest=new MultipartFormDataRequest(request);
 		request.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		String owner =Utility.convertThai(mrequest.getParameter("param_name"));
+		String topic =request(mrequest.getParameter("param_topic"));
+		String desc  =request(mrequest.getParameter("param_desc"));
+		UploadFile pic =(UploadFile) mrequest.getFiles().get("picture") ;
+		
+		/*request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String owner = request.getParameter("param_name");
 		String topic = request.getParameter("param_topic");
-		String desc = request.getParameter("param_desc");
+		String desc = request.getParameter("param_desc");*/
 		
+		/*if (MultipartFormDataRequest.isMultipartFormData(request)){
+			MultipartFormDataRequest mr;
+			mr = new MultipartFormDataRequest(request);
+			
+			UploadBean u = new UploadBean();
+			u.setFolderstore("C:/Users/Administrator/git/DiscussAppWeb/WebContent/img");
+			u.store(mr,"upload");
+		}*/
 		
-		try {
+		try {			
+			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery("select * from post");
 			String id;
-
+			
+			
 			if(con != null) {
 				if(rs != null) {
 					if(rs.next()) {
@@ -100,6 +135,16 @@ public class NewPostBoard extends HttpServlet {
 
 					String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"',0)";
 					int return_val = stmt.executeUpdate(sql);
+					
+					
+					
+					UploadBean upBean = new UploadBean();
+					pic.setFileName(id.getBytes() + ".gif");
+					upBean.setFolderstore(getServletContext().getRealPath("/img"));
+					upBean.store(mrequest);
+
+					
+					
 					if(return_val==1) {
 						out.print("สร้างกระทู้เรียบร้อยแล้ว !!!<BR>");
 						out.print("<A HREF=\"AllTopic.jsp\">ดูกระทู้ทั้งหมด</A>");
@@ -117,6 +162,11 @@ public class NewPostBoard extends HttpServlet {
 			out.print("<A HREF=\"NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
+	}
+
+	private String request(String parameter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

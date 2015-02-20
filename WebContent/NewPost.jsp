@@ -11,13 +11,15 @@
 </head>
 <body>
 
-<FORM name="form1" ACTION="NewPostBoard" METHOD="post" onSubmit="JavaScript:return fncSubmit();">
+<FORM name="form1" ACTION="NewPostBoard" METHOD="post" enctype="multipart/from-data" onSubmit="JavaScript:return fncSubmit();" >
 		<center><br><h2>ตั้งกระทู้ใหม่</h2><BR><br></center>
 		<center><TABLE>
 		<TR><TD>ชื่อ</TD>
 					<TD><INPUT TYPE="text" NAME="param_name"></TD></TR>
 		<TR><TD>หัวข้อ</TD>
 					<TD><INPUT TYPE="text" NAME="param_topic"></TD></TR>
+		<TR><TD>เลือกรูปภาพ</TD>		
+					<TD><INPUT TYPE="file" NAME="picture"></TD></TR>
 		<TR><TD>รายละเอียด</TD>
 					<TD><TEXTAREA NAME="param_desc" COLS="20" ROWS="5"></TEXTAREA></TD></TR>
 		<TR><TD></TD>
