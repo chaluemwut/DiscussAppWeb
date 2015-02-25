@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.sql.*;
 
@@ -62,20 +63,28 @@ public class Login extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	@SuppressWarnings("deprecation")
 	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException, ServletException{
 		
-		
+			
+		HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
+		
+		//request.getSession().putValue("user_id","user");
+		
 		String userid=request.getParameter("user"); 	
 		String pwd=request.getParameter("pwd"); 
+		
+		session.putValue("userid", userid);
+				
 		
 		Class.forName("com.mysql.jdbc.Driver"); 
 		java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird","root","pong084391"); 
 		Statement st= con.createStatement(); 
-		ResultSet rs=st.executeQuery("select * from test where user_id='"+userid+"'"); 	
+		ResultSet rs=st.executeQuery("select * from test where user_id='"+userid+"' AND password='" + pwd + "'"); 	
 		
 			
 		

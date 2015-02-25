@@ -12,6 +12,8 @@
 <body>
 
 <%
+        String u = (String) request.getSession().getAttribute("userid");
+        //out.println(u);
 		request.setCharacterEncoding("UTF-8");
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
@@ -24,11 +26,16 @@
 			if(con != null) {
 				if(rs != null) {
 	%>
+	        <br>
+	        <p align = "right" ><Font Size=4>ยินดีต้อนรับคุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
+	         <p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p>
+	        
 			<center><br><h2>หัวข้อกระทู้ทั้งหมด</h2>	<BR><BR>
-	<table class="table  table-hover " style="width: 80%;">
+				<table class="table  table-hover " style="width: 80%;">
     <thead>
         <tr>
             <th>รหัส</th>
+            <th></th>
             <th>ชื่อกระทู้</th>
             <th>ชื่อคนโพส</th>
             <th>จำนวนตอบ-วันที่โพส</th>  
@@ -45,6 +52,9 @@
 					<tbody>
 						<tr  >
 						<TD ><%= id %></TD>
+						<TD>
+						 <img src=<%="images/"+id+".png"%> class="img-responsive" width="70" height="70">
+						</TD>
 						<TD>
 						<A HREF="<%= url %>">						
 						<%= new String(rs.getString("topic").getBytes(),"TIS-620") %></A>

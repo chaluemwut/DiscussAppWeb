@@ -12,15 +12,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.buf.UDecoder;
 
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
+import com.mysql.jdbc.UpdatableResultSet;
 import com.sun.corba.se.impl.util.Utility;
 
 import java.sql.*;
+import java.util.Vector;
 
 import javazoom.upload.*;
 
+import java.io.*;
 /**
  * Servlet implementation class NewPostBoard
  */
@@ -61,18 +67,23 @@ public class NewPostBoard extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
 	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, UploadException{
 		
 		
-		MultipartFormDataRequest mrequest=new MultipartFormDataRequest(request);
-		request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		String owner =Utility.convertThai(mrequest.getParameter("param_name"));
-		String topic =request(mrequest.getParameter("param_topic"));
-		String desc  =request(mrequest.getParameter("param_desc"));
-		UploadFile pic =(UploadFile) mrequest.getFiles().get("picture") ;
 		
+		if (MultipartFormDataRequest.isMultipartFormData(request)) {
+
+			MultipartFormDataRequest mul=new MultipartFormDataRequest(request);
+		//request.setCharacterEncoding("UTF-8");		
+		
+		String owner = com.rmuti.db.Utility.convertThai(mul.getParameter("param_name"));
+		String topic = com.rmuti.db.Utility.convertThai(mul.getParameter("param_topic"));
+		String desc  = com.rmuti.db.Utility.convertThai(mul.getParameter("param_desc"));
+		UploadFile file = (UploadFile) mul.getFiles().get("img_pd") ;
+		UploadBean up = new UploadBean();
 		/*request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -89,12 +100,31 @@ public class NewPostBoard extends HttpServlet {
 			u.store(mr,"upload");
 		}*/
 		
-		try {			
+		
+		
+		try {		
+			
+			/* String filetype = "";
+			 Vector<String> errors = new Vector<String>();
+			 if (file.getData() != null) {
+			 String filename = String.valueOf(file.getFileName());
+			 filetype = filename.substring(filename.lastIndexOf("."), filename.length());
+			 if ((filetype.indexOf("gif") == -1) && (filetype.indexOf("jpeg") == -1) && (filetype.indexOf("jpg") == -1)) {
+			 errors.add("ตรวจสอบชนิดไฟล์รูปภาพ");
+			 }
+			 } else {
+			 errors.add("ตรวจสอบไฟล์รูปภาพ");
+			 }*/
+			
+			
+			
+				
 			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery("select * from post");
+			
 			String id;
 			
 			
@@ -132,16 +162,22 @@ public class NewPostBoard extends HttpServlet {
 					year = Integer.toString(Integer.parseInt(year)+543);
 
 					String datetime = day+" "+month+" "+year+" "+time;
+					
+				   file.setFileName(String.valueOf(id+".png" ));
 
-					String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"',0)";
-					int return_val = stmt.executeUpdate(sql);
+					String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "',0)";						
+					int return_val = stmt.executeUpdate(sql);				
+					
+					up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images");
+					up.store(mul);
 					
 					
+
+					//UploadBean upBean = new UploadBean();
+					//pic.setFileName(id.getBytes() +".gif");					
+					//upBean.setFolderstore(getServletContext().getRealPath("/images"));
+					//upBean.store(mrequest);
 					
-					UploadBean upBean = new UploadBean();
-					pic.setFileName(id.getBytes() + ".gif");
-					upBean.setFolderstore(getServletContext().getRealPath("/img"));
-					upBean.store(mrequest);
 
 					
 					
@@ -158,12 +194,14 @@ public class NewPostBoard extends HttpServlet {
 				con.close();
 			}
 		} catch(Exception e) {
-			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่ !!!<BR>");
+			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
 			out.print("<A HREF=\"NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
+		}
 	}
 
+	@SuppressWarnings("unused")
 	private String request(String parameter) {
 		// TODO Auto-generated method stub
 		return null;

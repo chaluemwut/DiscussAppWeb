@@ -10,23 +10,30 @@
 <title>NewPost</title>
 </head>
 <body>
-
-<FORM name="form1" ACTION="NewPostBoard" METHOD="post" enctype="multipart/from-data" onSubmit="JavaScript:return fncSubmit();" >
+<%
+String u = (String) request.getSession().getAttribute("userid");
+%>
+<FORM name="form1" ACTION="NewPostBoard" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
+<br>
+<p align = "right" ><Font Size=4>ยินดีต้อนรับคุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
+<p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p>
 		<center><br><h2>ตั้งกระทู้ใหม่</h2><BR><br></center>
 		<center><TABLE>
 		<TR><TD>ชื่อ</TD>
 					<TD><INPUT TYPE="text" NAME="param_name"></TD></TR>
 		<TR><TD>หัวข้อ</TD>
 					<TD><INPUT TYPE="text" NAME="param_topic"></TD></TR>
-		<TR><TD>เลือกรูปภาพ</TD>		
-					<TD><INPUT TYPE="file" NAME="picture"></TD></TR>
+		
 		<TR><TD>รายละเอียด</TD>
 					<TD><TEXTAREA NAME="param_desc" COLS="20" ROWS="5"></TEXTAREA></TD></TR>
-		<TR><TD></TD>
+		
+		<TR><TD>เลือกรูปภาพ</TD>		
+					<TD><INPUT TYPE="file" NAME="img_pd"></TD></TR>
+		<TR><td></td>
 					<TD COLSPAN=2>
 					 <input class="btn btn-primary" type="submit" value="ส่งข้อมูล">
 				     <input class="btn btn-info" type="reset" value="เคลียร์">
-					</TR>
+					</TD></TR>
 		</TABLE>
 	</center></FORM>
 <script language="javascript">

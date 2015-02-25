@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
+	String u = (String) request.getSession().getAttribute("userid");
 	request.setCharacterEncoding("UTF-8");
 	String topic="";
 	String topic_id="";
@@ -32,8 +33,12 @@
 					<title><%=topic_id%> <%=topic %></title>
 					</head>
 					<body>
+					 <br>
+	                 <p align = "right" ><Font Size=4>ยินดีต้อนรับคุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
+	                 <p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p>
 					
 					<br><center><H3>หัวข้อเรื่อง <%=topic %></H3></center><br>
+					<center><img src=<%="images/"+topic_id+".png"%> width="500" height="500" ></center> 
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;รายละเอียด : 	<%= new String(rs.getString("description").getBytes(),"TIS-620") %><br><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;จากคุณ : <%= new String(rs.getString("owner").getBytes(),"TIS-620") %><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;วันที่ : <%= new String(rs.getString("date_time").getBytes(),"TIS-620") %><hr><br>
