@@ -15,12 +15,16 @@ String u = (String) request.getSession().getAttribute("userid");
 %>
 <FORM name="form1" ACTION="NewPostBoard" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 <br>
-<p align = "right" ><Font Size=4>ยินดีต้อนรับคุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
-<p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p>
-		<center><br><h2>ตั้งกระทู้ใหม่</h2><BR><br></center>
+ <center><table border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 95%; ">
+<tr>	  
+<td><p align = "right" ><Font Size=4>ยินดีต้อนรับคุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
+<p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p></td>
+</tr>
+		
 		<center><TABLE>
+		<center><br><h2>ตั้งกระทู้ใหม่</h2><BR><br></center>
 		<TR><TD>ชื่อ</TD>
-					<TD><INPUT TYPE="text" NAME="param_name"></TD></TR>
+					<TD><p><Font Size=4><%out.println(u);%></Font></p></TD></TR> 
 		<TR><TD>หัวข้อ</TD>
 					<TD><INPUT TYPE="text" NAME="param_topic"></TD></TR>
 		
@@ -39,12 +43,7 @@ String u = (String) request.getSession().getAttribute("userid");
 <script language="javascript">
 function fncSubmit()
 {
-	if(document.form1.param_name.value == "")
-	{
-		alert('มีชื่อไหม ถ้ามีก้อใส่ซะ');
-		document.form1.param_name.focus();
-		return false;
-	}	
+
 	if(document.form1.param_topic.value == "" )
 	{
 		alert('หัวข้อไม่ใส่จะมาตั้งกระทู้ทำเพื่อ');

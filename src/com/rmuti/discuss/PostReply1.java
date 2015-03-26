@@ -13,18 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.sql.*;
-
 /**
- * Servlet implementation class PostReply
+ * Servlet implementation class PostReply1
  */
-@WebServlet("/PostReply")
-public class PostReply extends HttpServlet {
+@WebServlet("/PostReply1")
+public class PostReply1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostReply() {
+    public PostReply1() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -90,18 +89,18 @@ public class PostReply extends HttpServlet {
 				System.out.println(time);
 				String datetime = day+" "+month+" "+year+" "+time;
 
-				String sql = "insert into post_reply (topic_id,name,description,date_time)"+
+				String sql = "insert into 1post_reply (topic_id,name,description,date_time)"+
 				                     "values('"+id+"','"+name+"','"+desc+"','"+datetime+"')";
-				String sql2 = "update post set num_reply=num_reply+1 where topic_id='"+id+"'";
+				String sql2 = "update 1post set num_reply=num_reply+1 where topic_id='"+id+"'";
 				int return_val = stmt.executeUpdate(sql);
 				int return_val2 = stmt.executeUpdate(sql2);
 				if(return_val==1&&return_val2==1) {
 					out.print("ได้รับคำตอบของคุณเรียบร้อย !!!<BR>");
-					out.print("<A HREF=\"AllTopic.jsp\">ดูกระทู้ทั้งหมด</A><BR>");
-					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">ย้อนกลับไปดูกระทู้ของคุณ</A>");
+					out.print("<A HREF=\"1AllTopic.jsp\">ดูกระทู้ทั้งหมด</A><BR>");
+					out.print("<A HREF=\"1ShowTopic.jsp?id="+id+"\">ย้อนกลับไปดูกระทู้ของคุณ</A>");
 				} else {
 					out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่!!!<BR>");
-					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
+					out.print("<A HREF=\"1ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
 				}
 				stmt.close();
 				con.close();
@@ -109,7 +108,7 @@ public class PostReply extends HttpServlet {
 
 		} catch(Exception e) {
 			out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่ !!!<BR>");
-			out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
+			out.print("<A HREF=\"1ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
 	}

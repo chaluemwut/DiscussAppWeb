@@ -84,16 +84,16 @@ public class Login extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver"); 
 		java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird","root","pong084391"); 
 		Statement st= con.createStatement(); 
-		ResultSet rs=st.executeQuery("select * from test where user_id='"+userid+"' AND password='" + pwd + "'"); 	
+		ResultSet rs=st.executeQuery("select * from tb_user where username ='"+userid+"' AND password ='" + pwd + "'"); 	
 		
 			
 		
 		if(rs.next()) 
 		{ 
-			if(rs.getString(2).equals(pwd)) 
+			if(rs.getString(2).equals(userid) || rs.getString(2).equals(pwd)) 
 			{ 
 				
-					response.sendRedirect("AllTopic.jsp");
+					response.sendRedirect("homeLogin.jsp");
 				
 
 			} 
@@ -105,7 +105,7 @@ public class Login extends HttpServlet {
 		} 
 		else
 		{	
-			out.print("ชื่อหรือรหัสไม่ถูกต้อง !!! !!!<br>");
+			out.print("ชื่อหรือรหัสไม่ถูกต้อง !!! <br>");
 			out.print("<A HREF=\"login.jsp\">กลับไป  login</A>");
 		}
 		

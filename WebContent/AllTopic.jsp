@@ -26,13 +26,16 @@
 			if(con != null) {
 				if(rs != null) {
 	%>
-	        <br>
-	        <p align = "right" ><Font Size=4>ยินดีต้อนรับคุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
-	         <p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p>
+	        <center><table border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 95%; ">
+	      <tr>
 	        
-			<center><br><h2>หัวข้อกระทู้ทั้งหมด</h2>	<BR><BR>
+	       <td><br> <p align = "right" ><Font Size=4>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%></Font></p>
+	         <p align = "right" ><a  href="logout.jsp">ออกจากระบบ</a></p></td>
+	      </tr>  
+			
 				<table class="table  table-hover " style="width: 80%;">
     <thead>
+    <center><br><h2>หัวข้อกระทู้ทั้งหมด</h2>	<BR><BR>
         <tr>
             <th>รหัส</th>
             <th></th>

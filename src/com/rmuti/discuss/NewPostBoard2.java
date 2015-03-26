@@ -27,17 +27,19 @@ import java.util.Vector;
 import javazoom.upload.*;
 
 import java.io.*;
+
+
 /**
- * Servlet implementation class NewPostBoard
+ * Servlet implementation class NewPostBoard2
  */
-@WebServlet("/NewPostBoard")
-public class NewPostBoard extends HttpServlet {
+@WebServlet("/NewPostBoard2")
+public class NewPostBoard2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NewPostBoard() {
+    public NewPostBoard2() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -123,9 +125,9 @@ public class NewPostBoard extends HttpServlet {
 				
 			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");			
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = stmt.executeQuery("select * from post");
+			ResultSet rs = stmt.executeQuery("select * from 2post");			
 			
 			String id;
 			
@@ -167,10 +169,10 @@ public class NewPostBoard extends HttpServlet {
 					
 				   file.setFileName(String.valueOf(id+".png" ));
 
-					String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "',0)";						
+					String sql = "insert into 2post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "',0)";						
 					int return_val = stmt.executeUpdate(sql);				
 					
-					up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images");
+					up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images2");
 					up.store(mul);
 					
 					
@@ -185,11 +187,11 @@ public class NewPostBoard extends HttpServlet {
 					
 					if(return_val==1) {
 						out.print("สร้างกระทู้เรียบร้อยแล้ว !!!<BR>");
-						out.print("<A HREF=\"AllTopic.jsp\">ดูกระทู้ทั้งหมด</A>");
+						out.print("<A HREF=\"2AllTopic.jsp\">ดูกระทู้ทั้งหมด</A>");
 					}
 					else {
 						out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่!!!<BR>");
-						out.print("<A HREF=\"NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
+						out.print("<A HREF=\"2NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
 					}
 				}
 				stmt.close();
@@ -197,7 +199,7 @@ public class NewPostBoard extends HttpServlet {
 			}
 		} catch(Exception e) {
 			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
-			out.print("<A HREF=\"NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
+			out.print("<A HREF=\"2NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
 		}

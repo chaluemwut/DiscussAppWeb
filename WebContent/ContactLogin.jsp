@@ -15,56 +15,43 @@ background-attachment:fixed;
 background-repeat: no-repeat; }
 </style>
 </head>
-<body background="img/bg2.jpg" style="height: 54px; ">
-<br>
-<%
-
-
-%>
-<form name="form1" action="Login" method="post" onSubmit="JavaScript:return fncSubmit();">
+<body background="img/bg2.jpg" >
+<% String u = (String) request.getSession().getAttribute("userid"); %>
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
            <td> <center> <img src="img/header.png" width="100%" height="100%" align="middle" /></center></td>
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="home.jsp">หน้าหลัก</a></li>
-  			<li role="presentation"><a href="About.jsp">เกี่ยวกับเรา</a></li>
- 			<li role="presentation"><a href="Contact.jsp">ติดต่อเรา</a></li>
- 			<p align = "right" ><Font Size=2><a href="register.jsp">&nbsp;&nbsp;สมัครสมาชิก</a>&nbsp;<a href="login.jsp">&nbsp;&nbsp;เข้าสู่ระบบ</a></Font></p> 		
+  			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
+  			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
+ 			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
+ 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
 			</ul></td>
        </tr>
         <tr>
-           <td>
-           <br>
-
-			<P1><center><Font Size=5>Login</Font></center></p1>
-			<br><center><table border="1" bordercolor="White" cellpadding="10" cellspacing="0" >
-                    
+                   
+                  			<td> <h1><font size=5><p align="left">ผู้ดูแลระบบ</p></font></h1></td>
+                   
+                   </tr> 
+                   
                     <tr>
-                             <td>User name :</td>
-                             <td><input type="text" name="user" /></td>
+                             <td><p1><font size=3><dd>1.นายศุภเดช  น้อยใหญ่ รหัสประจำตัว 553333013007-6</dd><br>
+                               ดูแลระบบ  Andriod 
+                             
+                            </font> </p1></td>
+                            
                             
                       </tr> 
                      
                       <tr>
                              
-                             <td>password :</td>
-                             <td><input type="password" name="pwd" /></td>
+                             <td><p1><font size=3><dd>2.นายณัฐพล  ผงบุญตา  รหัสประจำตัว 553333013008-4</dd><br>
+                             ดูแลระบบ   Web application 
+                             
+                           </font>  </p1></td>
+                            
                       </tr>
-  </table> 
-  
-
-<br><input  class="btn btn-success" type="submit" value="Login" />
-
-
-</center>
-           
-           
-           
-		 </td>
-        
-        </tr>
        
 
 
@@ -76,34 +63,6 @@ background-repeat: no-repeat; }
       </tr> 
 
 </table></center>
-	
-
-</form>
-
-<script language="javascript">
-function fncSubmit()
-{
-	if(document.form1.user.value == "")
-	{
-		alert('กรุณาใส่ชื่อ');
-		document.form1.user.focus();
-		return false;
-	}	
-	if(document.form1.pwd.value == "" )
-	{
-		alert('กรุณาใส่ Password');
-		document.form1.pwd.focus();		
-		return false;
-	}
-	
-				
-	document.form1.submit();
-}
-
-</script>
-
-
-
 
 
 <script src="js/jquery.js"></script>

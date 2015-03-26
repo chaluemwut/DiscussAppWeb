@@ -77,7 +77,7 @@
 		<center><TABLE>
 		<h3>ตอบกระทู้</h3>
 		<TR><TD><p  class="lead">ชื่อ</p></TD>
-					<TD><INPUT TYPE="text" NAME="param_name"></TD></TR>
+					<TD><p><Font Size=4><%out.println(u);%></Font></p></TD></TR> 
 		<TR><TD><p  class="lead">รายละเอียด</p></TD>
 					<TD><TEXTAREA NAME="param_desc" COLS="20" ROWS="5"></TEXTAREA></TD></TR>
 		<TR><TD></TD>
