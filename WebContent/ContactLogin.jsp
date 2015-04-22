@@ -23,9 +23,9 @@ background-repeat: no-repeat; }
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
+  			<li role="presentation" ><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
- 			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
+ 			<li role="presentation" class="active"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
  			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
 			</ul></td>
        </tr>

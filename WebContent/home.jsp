@@ -39,17 +39,7 @@ background-repeat: no-repeat; }
        </tr>
         
         
-        <tr>
-           <td><p>เลือกประเภทเว็บบอร์ด :
-			    <select name="link" id="link" onchange="redirect(this.value);">
-					<option value="#">เลือก</option>
-					<option value="1AllTopicNoLogin.jsp">อุปกรณ์อิเล็กทรอนิกส์</option>
-					<option value="2AllTopicNoLogin.jsp">รถยนต์และรถมอเตอร์ไซค์</option>
-					<option value="3AllTopicNoLogin.jsp">สัตว์เลี้ยง</option>
-				</select>
-			  </p></td>
-        
-        </tr>
+       
         
         
                  <%//----------------------------------------------------------------------------------------- %>
@@ -68,7 +58,7 @@ background-repeat: no-repeat; }
 				//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 				//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("select * from 1post");
+				ResultSet rs = stmt.executeQuery("select * from cat_id order by cat_id asc " );
 
 			if(con != null) {
 				if(rs != null) {
@@ -77,45 +67,43 @@ background-repeat: no-repeat; }
 			
 				<table class="table  table-hover " style="width: 100%;">
     <thead>
-    <center><br><h3><a href="1AllTopicNoLogin.jsp">หมวด อุปกรณ์อิเล็กทรอนิกส์</a></h3>	<BR><BR>
+    <center><br><h3>ประเภทกระทู้</h3>	<BR><BR>
         <tr>
-            <th>รหัส</th>
-            <th></th>
-            <th>ชื่อกระทู้</th>
-            <th>ชื่อคนโพส</th>
-            <th>จำนวนตอบ-วันที่โพส</th>  
+           
+          
+            <th>ชื่อประเภทกระทู้</th>
+            <th>วันที่เพิ่ม</th>
+            <th><center>จำนวนกระทู้</center></th>  
               
 			  </tr>
     </thead>
 
 					
 	<%
-					while(rs.next()) {
-						String id = new String(rs.getString("topic_id").getBytes(),"TIS-620");
-						String url="1ShowNo.jsp?id="+id;
+	while(rs.next()) {
+		String id = new String(rs.getString("cat_id").getBytes(),"TIS-620");
+		String url="ShowCatIDNo.jsp?id="+id;
+%>
+	<tbody>
+		<tr  >
+		
+		<TD>
+		<A HREF="<%= url %>">						
+		<%= new String(rs.getString("cat_topic").getBytes(),"TIS-620") %></A>
+		</TD>
+		<TD><%= new String(rs.getString("date_time").getBytes(),"TIS-620") %></TD>
+		<TD>
+		 <center><%= rs.getInt("num_reply") %></center>
+		</TD>
+		
+		</tr>
+	<%
+
+	}
 	%>
-					<tbody>
-						<tr  >
-						<TD ><%= id %></TD>
-						<TD>
-						 <img src=<%="images1/"+id+".png"%> class="img-responsive" width="70" height="70">
-						</TD>
-						<TD>
-						<A HREF="<%= url %>">						
-						<%= new String(rs.getString("topic").getBytes(),"TIS-620") %></A>
-						</TD>
-						<TD><%= new String(rs.getString("owner").getBytes(),"TIS-620") %></TD>
-						<TD>
-						(<%= rs.getInt("num_reply") %>-<%= rs.getString("date_time") %>)
-						</TD>
-						</tr>
-					<%
-	
-					}
-					%>
-	
-					</tbody>					
-					</table></center>
+
+	</tbody>					
+	</table></center>
 				
 				<%
 				}
@@ -156,7 +144,7 @@ background-repeat: no-repeat; }
 				//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 				//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("select * from 2post");
+				ResultSet rs = stmt.executeQuery("select * from post order by topic_id DESC;");
 
 			if(con != null) {
 				if(rs != null) {
@@ -165,7 +153,7 @@ background-repeat: no-repeat; }
 			
 				<table class="table  table-hover " style="width: 100%;">
     <thead>
-    <center><br><h3><a href="2AllTopicNoLogin.jsp">หมวด รถยนต์และรถมอเตอร์ไซค์</a></h3>	<BR><BR>
+    <center><br><h3>กระทู้ล่าสุด</h3>	<BR><BR>
         <tr>
             <th>รหัส</th>
             <th></th>
@@ -180,13 +168,14 @@ background-repeat: no-repeat; }
 	<%
 					while(rs.next()) {
 						String id = new String(rs.getString("topic_id").getBytes(),"TIS-620");
-						String url="2ShowNo.jsp?id="+id;
+						String img = new String(rs.getString("img").getBytes(),"TIS-620");
+						String url="ShowTopicNo.jsp?id="+id;
 	%>
 					<tbody>
 						<tr  >
 						<TD ><%= id %></TD>
 						<TD>
-						 <img src=<%="images2/"+id+".png"%> class="img-responsive" width="70" height="70">
+						 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
 						</TD>
 						<TD>
 						<A HREF="<%= url %>">						
@@ -225,98 +214,7 @@ background-repeat: no-repeat; }
        
        
        
-        </td>
-        
-        </tr>
-        <%//----------------------------------------------------------------------------------------- %>
-        
-            <tr>        
-        <td> 
-        	<center><table background="img/bgtb1.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
-        	 <tr>        
-             <td> 
-        			<%
-       			
-        		//out.println(u);
-				request.setCharacterEncoding("UTF-8");
-			try {
-				Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
-				//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
-				//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("select * from 3post");
-
-			if(con != null) {
-				if(rs != null) {
-	%>
-	       
-			
-				<table class="table  table-hover " style="width: 100%;">
-    <thead>
-    <center><br><h3><a href="3AllTopicNoLogin.jsp">หมวด สัตว์เลี้ยง</a></h3>	<BR><BR>
-        <tr>
-            <th>รหัส</th>
-            <th></th>
-            <th>ชื่อกระทู้</th>
-            <th>ชื่อคนโพส</th>
-            <th>จำนวนตอบ-วันที่โพส</th>  
-              
-			  </tr>
-    </thead>
-
-					
-	<%
-					while(rs.next()) {
-						String id = new String(rs.getString("topic_id").getBytes(),"TIS-620");
-						String url="3ShowNo.jsp?id="+id;
-	%>
-					<tbody>
-						<tr  >
-						<TD ><%= id %></TD>
-						<TD>
-						 <img src=<%="images3/"+id+".png"%> class="img-responsive" width="70" height="70">
-						</TD>
-						<TD>
-						<A HREF="<%= url %>">						
-						<%= new String(rs.getString("topic").getBytes(),"TIS-620") %></A>
-						</TD>
-						<TD><%= new String(rs.getString("owner").getBytes(),"TIS-620") %></TD>
-						<TD>
-						(<%= rs.getInt("num_reply") %>-<%= rs.getString("date_time") %>)
-						</TD>
-						</tr>
-					<%
-	
-					}
-					%>
-	
-					</tbody>					
-					</table></center>
-				
-				<%
-				}
-					rs.close();
-					stmt.close();
-					con.close();
-				}
-				} catch(Exception e) {
-					out.print("เกิดข้อผิดพลาดกับการแสดงกระทู้ทั้งหมด");
-					System.out.println(e);
-				}
-			
-				%>
- 				
- 				 </td>
- 				 </tr></table></center>
-  				
-       
-       
-       
-        </td>
-        
-        </tr>
-
+     
 
 </table></center>
  

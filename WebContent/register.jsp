@@ -84,8 +84,8 @@ if (rsChekUser.getString("userName").equals("1")) {
 	if (msgError.toString().equals("")) {
 		//หากตัวแปร msgError ซึ่งเป็น Valiable object ของ StringBulilder เป็นค่าว่าง แสดงว่ากรอกข้อมูลถูกต้อง
 		StringBuilder sql = new StringBuilder();//สร้างตัวแปรแบบ StringBuilder อีกครั้ง เพื่อเก็บคำสั่ง Insert
-		sql.append("INSERT INTO tb_user(username,password,name,userEmail,userTel,userAddress) ");
-		sql.append("VALUES('" + user + "','" + pass + "','" + name + "','" + email + "','" + tel + "','" + address + "')");
+		sql.append("INSERT INTO tb_user(username,password,name,userEmail,userTel,userAddress,role_id) ");
+		sql.append("VALUES('" + user + "','" + pass + "','" + name + "','" + email + "','" + tel + "','" + address + "',3)");
 		if (Conndb.getConn().executeUpdate(sql.toString()) > 0) {
 		//หากเพิ่มข้อมูลถูกต้อง จะได้รับค่ารีเทิร์นกลับมาเป็น 1 แสดงว่า ได้สมัครสมาชิกสมบูรณ์แล้ว
 		out.print("<font color=\"green\">สมัครสมาชิกเรียบร้อยแล้ว</font><BR>");

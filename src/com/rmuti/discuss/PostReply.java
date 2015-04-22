@@ -96,9 +96,8 @@ public class PostReply extends HttpServlet {
 				int return_val = stmt.executeUpdate(sql);
 				int return_val2 = stmt.executeUpdate(sql2);
 				if(return_val==1&&return_val2==1) {
-					out.print("ได้รับคำตอบของคุณเรียบร้อย !!!<BR>");
-					out.print("<A HREF=\"AllTopic.jsp\">ดูกระทู้ทั้งหมด</A><BR>");
-					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">ย้อนกลับไปดูกระทู้ของคุณ</A>");
+					out.print("ได้รับคำตอบของคุณเรียบร้อย !!!<BR>");				
+					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">ย้อนกลับไปดูกระทู้ที่โพส</A>");
 				} else {
 					out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่!!!<BR>");
 					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");

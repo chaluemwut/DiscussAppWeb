@@ -12,6 +12,7 @@
 <body>
 <%
 String u = (String) request.getSession().getAttribute("userid");
+request.setCharacterEncoding("UTF-8");
 %>
 <FORM name="form1" ACTION="NewPostBoard" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 <br>
@@ -39,7 +40,9 @@ String u = (String) request.getSession().getAttribute("userid");
 				     <input class="btn btn-info" type="reset" value="เคลียร์">
 					</TD></TR>
 		</TABLE>
-	</center></FORM>
+	</center>
+	<INPUT TYPE="hidden" NAME="id" VALUE="<%=request.getParameter("id")%>">
+	</FORM>
 <script language="javascript">
 function fncSubmit()
 {

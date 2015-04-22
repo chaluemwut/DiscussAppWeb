@@ -42,7 +42,11 @@ background-repeat: no-repeat; }
           <tr>
            <td><p>เลือกประเภทเว็บบอร์ด :
 			    <select name="link" id="link" onchange="redirect(this.value);">
+			    <%
+			    
+			    %>
 					<option value="1AllTopic.jsp">อุปกรณ์อิเล็กทรอนิกส์</option>
+				<% %>
 					<option value="2AllTopic.jsp">รถยนต์และรถมอเตอร์ไซค์</option>
 					<option value="3AllTopic.jsp">สัตว์เลี้ยง</option>
 				</select>

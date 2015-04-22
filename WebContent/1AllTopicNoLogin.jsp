@@ -62,7 +62,7 @@ background-repeat: no-repeat; }
 				//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 				//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("select * from 1post");
+				ResultSet rs = stmt.executeQuery("select * from 1post order by topic_id DESC;");
 
 			if(con != null) {
 				if(rs != null) {

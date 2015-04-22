@@ -82,6 +82,7 @@ public class NewPostBoard extends HttpServlet {
 		
 		String owner = u;	
 		//String owner = com.rmuti.db.Utility.convertThai(mul.getParameter("param_name"));
+		String cat_id = com.rmuti.db.Utility.convertThai(mul.getParameter("id"));
 		String topic = com.rmuti.db.Utility.convertThai(mul.getParameter("param_topic"));
 		String desc  = com.rmuti.db.Utility.convertThai(mul.getParameter("param_desc"));
 		UploadFile file = (UploadFile) mul.getFiles().get("img_pd") ;
@@ -119,27 +120,29 @@ public class NewPostBoard extends HttpServlet {
 			 }*/
 			
 			
-			
+String id="";			
 				
 			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = stmt.executeQuery("select * from post");
+			ResultSet rs = stmt.executeQuery("select * from post order by cat_id asc");
 			
-			String id;
+			
 			
 			
 			if(con != null) {
 				if(rs != null) {
+				
 					if(rs.next()) {
 						rs.last();
-						id = rs.getString("topic_id");
-						id = Integer.toString(Integer.parseInt(id)+1);
+						
 					} 
 					else {
-						id = "1000000000";
+						
+					
 					}
+					
 					rs.close();
 
 					java.util.Date d = new java.util.Date();
@@ -165,13 +168,35 @@ public class NewPostBoard extends HttpServlet {
 
 					String datetime = day+" "+month+" "+year+" "+time;
 					
-				   file.setFileName(String.valueOf(id+".png" ));
-
-					String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "',0)";						
-					int return_val = stmt.executeUpdate(sql);				
+					int top = 0;
 					
+				
+					file.setFileName(String.valueOf(d.getTime()+".png" ));
+				//	String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "',0)";						
+				//	int return_val = stmt.executeUpdate(sql);				
+					
+					
+					String sql = "insert into post (cat_id,topic,description,owner,date_time,img,top_id,num_reply) values ('"+cat_id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "','"+top+"',0)";	
+					String sql2 = "update cat_id set num_reply=num_reply+1 where cat_id='"+cat_id+"'";
+					int return_val = stmt.executeUpdate(sql);
+					int return_val2 = stmt.executeUpdate(sql2);
+					
+				
 					up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images");
 					up.store(mul);
+					
+					
+			    	if(return_val==1&&return_val2==1) {
+					out.print("สร้างกระทู้ของคุณเรียบร้อย !!!<BR>");
+					out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">ดูกระทู้ทั้งหมด</A><BR>");
+					
+			    	} else {
+			    			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่!!!<BR>");
+			    			out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">กลับไปตอบกระทู้ใหม่</A>");
+			    	}
+			    	stmt.close();
+			    	con.close();
+				}	
 					
 					
 
@@ -183,21 +208,11 @@ public class NewPostBoard extends HttpServlet {
 
 					
 					
-					if(return_val==1) {
-						out.print("สร้างกระทู้เรียบร้อยแล้ว !!!<BR>");
-						out.print("<A HREF=\"AllTopic.jsp\">ดูกระทู้ทั้งหมด</A>");
-					}
-					else {
-						out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่!!!<BR>");
-						out.print("<A HREF=\"NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
-					}
-				}
-				stmt.close();
-				con.close();
+					
 			}
 		} catch(Exception e) {
 			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
-			out.print("<A HREF=\"NewPost.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
+			out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">กลับไปสร้างกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
 		}
