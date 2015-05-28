@@ -10,6 +10,7 @@ import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,6 +78,7 @@ public class Login extends HttpServlet {
 		
 		String userid=request.getParameter("user"); 	
 		String pwd=request.getParameter("pwd"); 
+		String save = request.getParameter("save");
 		
 //		session.putValue("userid", userid);
 		session.setAttribute("userid", userid);
@@ -90,11 +92,20 @@ public class Login extends HttpServlet {
 						+ " LEFT JOIN cat_id b ON ( a.username = b.username )"
 						+ " where a.username ='" + userid + "' "
 						+ " and a.password ='" + pwd + "'";
-		ResultSet rs = st.executeQuery(sql);	
+		ResultSet rs = st.executeQuery(sql);
+		
+	
 			
 		
 		if(rs.next()) 
 		{	
+			
+				if (save != null) { //จำค่าล็อกอิน จะเก็บข้อมูลแบบคุ๊กกี้
+				Cookie cookie = new Cookie("ck_user", rs.getString("username"));
+				cookie.setMaxAge(365 * 24 * 60 * 60);//เก็บค่าล็อกอินไว้ 1 ปี
+				response.addCookie(cookie);
+				}
+			
 			    String userIdDB = rs.getString(3);
 			    String passWordDB = rs.getString(4);
 				if(userIdDB.equals(userid) && passWordDB.equals(pwd)) 
@@ -107,14 +118,16 @@ public class Login extends HttpServlet {
 				} 
 				else 
 				{ 
-					out.print("ชื่อหรือรหัสไม่ถูกต้อง !!!<br>");
-					out.print("<A HREF=\"login.jsp\">กลับไป Login</A>");
+					response.sendRedirect("ShowNoLogin.jsp");
+					//out.print("ชื่อหรือรหัสไม่ถูกต้อง !!!<br>");
+					//out.print("<A HREF=\"login.jsp\">กลับไป Login</A>");
 				} 	
 		}	 
 		else
 		{	
-			out.print("ชื่อหรือรหัสไม่ถูกต้อง !!! <br>");
-			out.print("<A HREF=\"login.jsp\">กลับไป  login</A>");
+			response.sendRedirect("ShowNoLogin.jsp");
+			//out.print("ชื่อหรือรหัสไม่ถูกต้อง !!! <br>");
+			//out.print("<A HREF=\"login.jsp\">กลับไป  login</A>");
 		}
 		
 		

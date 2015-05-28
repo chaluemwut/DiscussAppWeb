@@ -26,8 +26,16 @@ background-repeat: no-repeat; }
 
 <%String u = (String) request.getSession().getAttribute("userid");
 Integer roleid = (Integer) request.getSession().getAttribute("role_id");
-Integer catid = (Integer) request.getSession().getAttribute("cat_id"); 
+Integer catid = (Integer) request.getSession().getAttribute("cat_id");
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
 %>
+<%//--------------------------------facebook.com/share/  --------https://www.addthis.com/dashboard#gallery/ra-5563689270a6e4f5%>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5563689270a6e4f5" async="async"></script>
+<% //------------------------------------------------------%>
+
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
            <td> <center> <img src="img/header.png" width="100%" height="100%" align="middle" /></center></td>
@@ -37,11 +45,11 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
   			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
- 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%><%out.println(roleid);%> <a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
+ 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%><a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
 			</ul></td>
        </tr>
         
-        
+     
        
         
         
@@ -54,19 +62,69 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 	String cat_topic="";
 	String cat_id="";
 	     
-  
+	int row_page = 10; // จำนวนรายการหรือเรคอร์ดที่ต้องการแสดงใน 1 หน้า
+	int total_row=0; // จำนวนรายการหรือเรคอร์ดทั้งหมดที่ดึงมาจากฐานข้อมูลเพื่อนำมาแสดง
+	
+	
+	
+		
+	
                    
 	try {
+		
+        
+	
 		
 		Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 		//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 		//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
+		
 		Statement stmt = con.createStatement();
+		ResultSet Myrs = stmt.executeQuery("SELECT count(*) AS num FROM post  where cat_id='"+request.getParameter("id")+"' AND top_id = 0 ");
+        
+		
+		while(Myrs.next())
+		{
+			total_row = Myrs.getInt("num");
+		}
+		    if(total_row == 0){
+		    	
+		    	out.print("<center>กระทู้นี้ยังไม่มีข้อมูล !!!</center>");
+%>		    	<br>
+				<br>
+		    	<p align="center"><a   class="btn btn-primary" href="NewPost.jsp?id=<%=request.getParameter("id")%>" role="button">ตั้งหมวดกระทู้</a></p>
+		    	<p align="center"><a  class="btn btn-danger" href="homeLogin.jsp" role="button">กลับไปยังหมวดกระทู้</a></p><br>
+<%
+		    }
+		
+		Myrs.close();
+		
+
+		 
+		// คำนวณหาตัวเลขจำนวนหน้าที่จะแสดง แล้วเก็บตัวเลขนี้ไว้ในตัวแปร total_page
+		int total_page = (int)Math.ceil((double)total_row/(double)row_page);
+		int screen,start;
+		// ถ้าไม่มีการส่งตัวแปร screen มา แสดงว่าผู้ชมเปิดดูข้อมูลหน้านี้เป็นหน้าแรก
+		if(request.getParameter("screen")==null) {
+				screen=1;
+		}	
+		// ถ้ามีการส่งตัวแปร screen มา แสดงว่าผู้ชมต้องการดูข้อมูลหน้านั้น
+		// แปลงค่าตัวแปร screen ที่ส่งมาเป็นสตริง ให้เป็นตัวเลข เพื่อจะนำไปใช้ในการตรวจสอบ
+		else{
+				screen = Integer.parseInt(request.getParameter("screen"));
+		}	
+		if(screen>=1 && screen<=total_page)
+		{
+						// คำนวณหาข้อมูลเริ่มต้นในฐานข้อมูล
+		start = (screen-1)*row_page;		
+		
 		String sql = "select * from cat_id where cat_id='"+request.getParameter("id")+"'";
 		String sql2 = "select * from post where cat_id='"+request.getParameter("id")+"' order by topic_id DESC;" ;
-		String sql3 = "select * from post where cat_id='"+request.getParameter("id")+"' order by topic_id DESC;" ;
+		String sql3 = "SELECT topic_id,cat_id,topic,description,owner,date_time,img,top_id,num_reply  FROM post where cat_id='"+request.getParameter("id")+"'AND top_id = 0 ORDER BY topic_id DESC LIMIT "+start+","+row_page;
 		ResultSet rs = stmt.executeQuery(sql);
+		
+		
 		if(con != null) {
 			if(rs != null) {
 				while(rs.next()) {
@@ -83,8 +141,10 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 					</head>
 					<body>
 					 <br>
-	              
+					<%if(roleid ==1){ %> 
+	                 <p align="right"><a  class="btn btn-success" href="ClosingDel.jsp" role="button">กระทู้ที่แจ้งลบ</a></p><br>
 					
+					<%} %>
 					<br><center><H3><%=cat_topic %></H3></center><br>	
 		   
       
@@ -99,7 +159,7 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 			if(rs2 != null) {
 %>				
 				
-		 <center>  <table class="table table-hover" style="width: 80%;">
+		 <center>  <table class="table table-hover" style="width: 90%;">
  
      <thead>          
             <tr >
@@ -110,6 +170,9 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
             <th>ชื่อคนโพส</th>    
             <th>จำนวนตอบ</th>       
             <th>วันที่โพส</th> 
+             <th>แก้ไข</th>       
+            <th>ลบ</th> 
+            
            
 			</tr>
 	</thead>	   		
@@ -126,12 +189,12 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 					  String top = new String(rs2.getString("top_id").getBytes(),"TIS-620");
 					  Integer topid= Integer.valueOf(top);
 					  
-			  
+			 if(screen == 1){	  
 					  
 					  if( topid == 1){ 					
 					  
 %>				
- <tr >
+ <tr bgcolor="pink">
                   
                  
 			       	        
@@ -143,8 +206,8 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 			<% 		  
 					if(roleid ==1){	
 			%>		
-					<td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>">แก้ไข</a></td>
-					<td><a href="delTopic.jsp?id=<%=rs2.getString("topic_id")%>">ลบ</a><td>
+					<td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					<td><a href="delTopic.jsp?id=<%=rs2.getString("topic_id")%>"><img src="img/delete.png" width="20" height="20"  /></a><td>
 					<td> <a href="EditNoTopID.jsp?id=<%=rs2.getString("topic_id")%>">ยกเลิกปักหมุด</a></td>
 					
 			<%
@@ -155,22 +218,29 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 						
 						if(catIdStg.equals(delCat)){
 			%>		
-						<td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>">แก้ไข</a></td>
-					<td><a href="delTopic.jsp?id=<%=rs2.getString("topic_id")%>">ลบ</a><td>
+						<td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					<td><a href="delTopic.jsp?id=<%=rs2.getString("topic_id")%>"><img src="img/delete.png" width="20" height="20"  /></a><td>
 					<td> <a href="EditNoTopID.jsp?id=<%=rs2.getString("topic_id")%>">ยกเลิกปักหมุด</a></td>
 					
 					</tr>
 			        
 			  
-			<%         }
+			<%          }else if(u.equals(name)){
+				
+						%>			
+			  			 <td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+		       			 <td> <a href="Closing.jsp?id=<%=rs2.getString("topic_id")%>">ปิดการขาย</a></td>
+						<% 			
+			
+						}
 					}	
 					if(roleid == 3){
 						if(u.equals(name)){
 							
 			%>
 					
-			        <td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>">แก้ไข</a></td>
-			
+			        <td> <a href="EditUpdateTopic.jsp?id=<%=rs2.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					<td> <a href="Closing.jsp?id=<%=rs2.getString("topic_id")%>">ปิดการขาย</a></td>
 			<%			}
 					}
 			
@@ -179,6 +249,7 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 	<%
 						
 					}
+			      }	  
 				}
 			}
 			rs2.close();
@@ -215,8 +286,8 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 			%>		
 					  
 					  
-					<td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>">แก้ไข</a></td>
-					<td><a href="delTopic.jsp?id=<%=rs3.getString("topic_id")%>">ลบ</a><td>
+					<td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					<td><a href="delTopic.jsp?id=<%=rs3.getString("topic_id")%>"><img src="img/delete.png" width="20" height="20"  /></a><td>
 					<td> <a href="EditTopUpdate.jsp?id=<%=rs3.getString("topic_id")%>">ปักหมุด</a></td>
 					
 						
@@ -224,18 +295,24 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 					}
 					if(roleid == 2){	
 						String catIdStg= String.valueOf(catid);
-						
-						
+		
 						if(catIdStg.equals(delCat)){
 			%>		
-						<td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>">แก้ไข</a></td>
-					<td><a href="delTopic.jsp?id=<%=rs3.getString("topic_id")%>">ลบ</a><td>
-					<td> <a href="EditNoTopID.jsp?id=<%=rs3.getString("topic_id")%>">ยกเลิกปักหมุด</a></td>
+						<td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					<td><a href="delTopic.jsp?id=<%=rs3.getString("topic_id")%>"><img src="img/delete.png" width="20" height="20"  /></a><td>
+					<td> <a href="EditTopUpdate.jsp?id=<%=rs3.getString("topic_id")%>">ปักหมุด</a></td>
 					
 					</tr>
 			        
 			  
-			<%         }
+			<%         }else if(u.equals(name)){
+				
+					%>			
+				  		 <td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+			       		 <td> <a href="Closing.jsp?id=<%=rs3.getString("topic_id")%>">ปิดการขาย</a></td>
+					<% 			
+				
+						}
 					}
 					
 					if(roleid == 3){
@@ -243,8 +320,8 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 							
 			%>
 					
-			        <td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>">แก้ไข</a></td>
-			
+			        <td> <a href="EditUpdateTopic.jsp?id=<%=rs3.getString("topic_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+			        <td> <a href="Closing.jsp?id=<%=rs3.getString("topic_id")%>">ปิดการขาย</a></td>
 			<%			}
 					}
 			
@@ -259,69 +336,55 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 			}
 		}
 	}
+%>
+</table></center>				
+ <center>  <table class="table table-hover" style="width: 80%;">
+<%				
+				if(screen>1) {
+					out.println("<a href='ShowCatID.jsp?id="+request.getParameter("id")+"&screen="+(screen-1)+"' ><b>ย้อนกลับ</b></a>");
+				}	
+				for(int i=1; i<=total_page; i++)
+				{
+					if(i==screen){
+						out.println(" <b>["+i+"]</b>");
+					}
+					else{
+						
+						out.println(" | <a href='ShowCatID.jsp?id="+request.getParameter("id")+"&screen="+i+"'>"+i+" </a> | ");
+					}
+				}
+				if(screen<total_page) {
+					out.println("<a href='ShowCatID.jsp?id="+request.getParameter("id")+"&screen="+(screen+1)+"' ><b>ถัดไป</b></a>");
+				}	
+							
 	rs3.close();
 			stmt.close();
 			con.close();
-		}
+		}}
 	} catch(Exception e) {
 		out.print("เกิดข้อผิดพลาดกับการแสดงกระทู้");
 		System.out.println(e);
 	}
+
 %>
+
 </table></center>
 
-<p align="center"><a  class="btn btn-danger" href="homeLogin.jsp" role="button">กลับไปยังหมวดกระทู้</a></p>
+<% 
+	if(total_row > 0){
+%>
+<p align="center"><a   class="btn btn-primary" href="NewPost.jsp?id=<%=request.getParameter("id")%>" role="button">ตั้งหัวข้อกระทู้</a></p>
+<p align="center"><a  class="btn btn-danger" href="homeLogin.jsp" role="button">กลับไปยังหมวดกระทู้</a></p><br>
 
-<FORM name="form1" ACTION="NewPostBoard" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
-<br>
- <center><table border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 95%; ">
+<%
 
-		
-		<center><TABLE>
-		<center><br><h4>ตั้งกระทู้ใหม่</h4><BR><br></center>
-		<TR><TD>ชื่อ</TD>
-					<TD><p><Font Size=4><%out.println(u);%></Font></p></TD></TR> 
-		<TR><TD>หัวข้อ</TD>
-					<TD><INPUT TYPE="text" NAME="param_topic"></TD></TR>
-		
-		<TR><TD>รายละเอียด</TD>
-					<TD><TEXTAREA NAME="param_desc" COLS="20" ROWS="5"></TEXTAREA></TD></TR>
-		
-		<TR><TD>เลือกรูปภาพ</TD>		
-					<TD><INPUT TYPE="file" NAME="img_pd"></TD></TR>
-		<TR><td></td>
-					<TD COLSPAN=2>
-					 <input class="btn btn-primary" type="submit" value="ส่งข้อมูล">
-				     <input class="btn btn-info" type="reset" value="เคลียร์">
-					</TD></TR>	
-	
-</table></center>
-<INPUT TYPE="hidden" NAME="id" VALUE="<%=request.getParameter("id")%>">
-</FORM>
-<script language="javascript">
-function fncSubmit()
-{
-
-	if(document.form1.param_topic.value == "" )
-	{
-		alert('หัวข้อไม่ใส่จะมาตั้งกระทู้ทำเพื่อ');
-		document.form1.param_topic.focus();		
-		return false;
 	}
-	if(document.form1.param_desc.value == "")
-	{
-		alert('ใส่รายละเอียดด้วยนะ');
-		document.form1.param_desc.focus();
-		return false;
-	}	
-				
-	document.form1.submit();
-}
-
-</script>
+%>
 
 
 </table></center>
+
+
  
 
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >

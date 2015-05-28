@@ -16,7 +16,11 @@ background-repeat: no-repeat; }
 </style>
 </head>
 <body background="img/bg2.jpg" >
-<% String u = (String) request.getSession().getAttribute("userid"); %>
+<% String u = (String) request.getSession().getAttribute("userid");
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+%>
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
            <td> <center> <img src="img/header.png" width="100%" height="100%" align="middle" /></center></td>

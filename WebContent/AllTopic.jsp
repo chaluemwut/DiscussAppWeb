@@ -13,6 +13,9 @@
 
 <%
         String u = (String) request.getSession().getAttribute("userid");
+			if(u == null){
+				response.sendRedirect("login.jsp");
+			}
         //out.println(u);
 		request.setCharacterEncoding("UTF-8");
 		try {

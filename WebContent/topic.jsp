@@ -26,7 +26,11 @@ background-repeat: no-repeat; }
 
 </head>
 <body background="img/bg2.jpg"  >
-<% String u = (String) request.getSession().getAttribute("userid"); %>
+<% String u = (String) request.getSession().getAttribute("userid"); 
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+%>
 
 <FORM name="form1" ACTION="NewCatID" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 
@@ -39,7 +43,7 @@ background-repeat: no-repeat; }
   			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
- 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;เข้าสู่ระบบ</a></Font></p> 	
+ 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
 
 			</ul></td>
        </tr>
@@ -54,8 +58,8 @@ background-repeat: no-repeat; }
 		
 	
 					<TR><TD>หัวข้อ  &nbsp; &nbsp;<INPUT TYPE="text" NAME="cat_topic"></TD></TR>
-		            <tr><td>ชื่อผู้ดูแล  &nbsp;<input type="text" name="username"></td>	</tr>	           
-		            <tr><td>รหัสผ่าน <input type="password" name="password"></td></tr>
+		            	           
+		          
 					
 	
 	
@@ -89,18 +93,7 @@ function fncSubmit()
 		document.form1.cat_topic.focus();		
 		return false;
 	}
-	if(document.form1.username.value == "" )
-	{
-		alert('กรุณาใส่ชื่อ');
-		document.form1.username.focus();		
-		return false;
-	}
-	if(document.form1.password.value == "" )
-	{
-		alert('กรุณาใส่รหัส');
-		document.form1.password.focus();		
-		return false;
-	}
+	
 	
 				
 	document.form1.submit();

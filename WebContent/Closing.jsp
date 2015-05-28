@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>    
+<%@ page import="java.sql.*" %>   
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head link href="css/bootstrap.min.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
 <title>DiscussAppWeb</title>
 <script type="text/javascript">
 //<![CDATA[
@@ -25,9 +31,13 @@ background-repeat: no-repeat; }
 
 </head>
 <body background="img/bg2.jpg"  >
-<% String u = (String) request.getSession().getAttribute("userid"); %>
+<% String u = (String) request.getSession().getAttribute("userid");
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+%>
 
-<FORM name="form1" ACTION="NewPostBoard1" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
+<FORM name="form1" ACTION="" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
@@ -38,43 +48,69 @@ background-repeat: no-repeat; }
   			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
- 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;เข้าสู่ระบบ</a></Font></p> 	
+ 			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
 
 			</ul></td>
        </tr>
-        <tr>
-          <tr>
-           <td><p>เลือกประเภทเว็บบอร์ด :
-			    <select name="link" id="link" onchange="redirect(this.value);">
-				
-					<option value="1AllTopic.jsp">อุปกรณ์อิเล็กทรอนิกส์</option>
-					<option value="2AllTopic.jsp">รถยนต์และรถมอเตอร์ไซค์</option>
-					<option value="3AllTopic.jsp">สัตว์เลี้ยง</option>
-				</select>
-			  </p></td>
         
-        </tr>
+          
        
         <tr>
         <td>
+           <center><TABLE>
+        
+<%
+
+
+Connection con = null;	
+Statement  stmt= null; 
+		try {
+			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
+			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			 stmt = con.createStatement();
+			
+			 String stmt_id = request.getParameter("id");
+			
+			 
+			 int top =2;
+	
+String sql = "UPDATE post " +
+			"SET top_id = '"+ top + "' " +
+			" WHERE topic_id = '" + stmt_id + "' ";
+			
+     stmt.execute(sql);
+    
+     out.println("ปิดการขายเรียบร้อยแร้ว");
+  		
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		out.println(e.getMessage());
+		e.printStackTrace();
+	}
+
+	try {
+		if(stmt!=null){
+			stmt.close();
+			con.close();
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		out.println(e.getMessage());
+		e.printStackTrace();
+	}
+%>        
+      	
       
-         <center><TABLE>
-		<center><br><h2>ตั้งกระทู้ใหม่</h2><BR><br></center>
-		<TR><TD>ชื่อ</TD>
-					<TD><p><Font Size=4><%out.println(u);%></Font></p></TD></TR> 
-		<TR><TD>หัวข้อ</TD>
-					<TD><INPUT TYPE="text" NAME="param_topic"></TD></TR>
 		
-		<TR><TD>รายละเอียด</TD>
-					<TD><TEXTAREA NAME="param_desc" COLS="20" ROWS="5"></TEXTAREA></TD></TR>
 		
-		<TR><TD>เลือกรูปภาพ</TD>		
-					<TD><INPUT TYPE="file" NAME="img_pd"></TD></TR>
+		<br><br><br>
+		
 		<TR><td></td>
-					<TD COLSPAN=2>
-					 <input class="btn btn-primary" type="submit" value="ตกลง">
-				     <input class="btn btn-info" type="reset" value="เคลียร์">
+					<TD >
+					 <a class="btn btn-danger" href="homeLogin.jsp" role="button">กลับ</a>
+				  
 					</TD></TR>
+					
 		</TABLE>
 	</center>
 
@@ -86,40 +122,30 @@ background-repeat: no-repeat; }
 </table></center>
 
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
+	  
 	  <tr>
            <td> <center> <img src="img/below1.png" width="100%" height="100%" align="middle" /></center></td>
       </tr> 
 
 </table></center></FORM>
+
 <script language="javascript">
 function fncSubmit()
 {
 	
-	if(document.form1.param_topic.value == "" )
+	if(document.form1.cat_topic.value == "" )
 	{
 		alert('กรุณาใส่หัวข้อกระทู้');
-		document.form1.param_topic.focus();		
+		document.form1.cat_topic.focus();		
 		return false;
 	}
-	if(document.form1.param_desc.value == "")
-	{
-		alert('ใส่รายละเอียดด้วยนะ');
-		document.form1.param_desc.focus();
-		return false;
-	}	
-	if(document.form1.img_pd.value == "")
-	{
-		alert('กรุณาใส่รูปภาพด้วยนะ');
-		document.form1.img_pd.focus();
-		return false;
-	}	
+	
 				
 	document.form1.submit();
 }
 
+
 </script>
-
-
          
 
 

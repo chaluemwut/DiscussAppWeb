@@ -12,12 +12,28 @@
 <body>
 <%
 
-session.removeAttribute("ss_userLogin");//เคลียร์session
-
-
-response.sendRedirect("home.jsp");
+	if (session.getAttribute("userid") != null) {
+		
+		session.removeAttribute("userid");//เคลียร์session
+	if (request.getCookies() != null) {//เคลียร์Cookie
+		Cookie cookies[] = request.getCookies();
+	   
+	if (cookies != null) {
+		for (int i = 0; i < cookies.length; i++) {
+			if (cookies[i].getName().equals("ck_user")) {
+				cookies[i].setMaxAge(0);
+				response.addCookie(cookies[i]);
+		break;
+			}
+		}
+	}
+	}
+   response.sendRedirect("login.jsp");
+	}
 
 %>
+
+
 
 </body>
 </html>

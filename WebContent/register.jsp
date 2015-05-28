@@ -82,10 +82,11 @@ if (rsChekUser.getString("userName").equals("1")) {
 	msgError.append("กรุณากรอก ที่อยู่ ให้ชัดเจน");
 	}
 	if (msgError.toString().equals("")) {
+		String cat_topic ="No";
 		//หากตัวแปร msgError ซึ่งเป็น Valiable object ของ StringBulilder เป็นค่าว่าง แสดงว่ากรอกข้อมูลถูกต้อง
 		StringBuilder sql = new StringBuilder();//สร้างตัวแปรแบบ StringBuilder อีกครั้ง เพื่อเก็บคำสั่ง Insert
-		sql.append("INSERT INTO tb_user(username,password,name,userEmail,userTel,userAddress,role_id) ");
-		sql.append("VALUES('" + user + "','" + pass + "','" + name + "','" + email + "','" + tel + "','" + address + "',3)");
+		sql.append("INSERT INTO tb_user(username,password,name,userEmail,userTel,userAddress,cat_Topic,role_id) ");
+		sql.append("VALUES('" + user + "','" + pass + "','" + name + "','" + email + "','" + tel + "','" + address + "','" + cat_topic + "',3)");
 		if (Conndb.getConn().executeUpdate(sql.toString()) > 0) {
 		//หากเพิ่มข้อมูลถูกต้อง จะได้รับค่ารีเทิร์นกลับมาเป็น 1 แสดงว่า ได้สมัครสมาชิกสมบูรณ์แล้ว
 		out.print("<font color=\"green\">สมัครสมาชิกเรียบร้อยแล้ว</font><BR>");

@@ -65,22 +65,30 @@ Statement  stmt= null;
 			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 			 stmt = con.createStatement();
 			
-			 String stmtcat_id = request.getParameter("id");
+			 String stmtcat_id = com.rmuti.db.Utility.convertThai(request.getParameter("id"));
 			 String stmttopic =com.rmuti.db.Utility.convertThai(request.getParameter("cat_topic"));
-			 
+			 String username =com.rmuti.db.Utility.convertThai(request.getParameter("username"));
+			 String password =com.rmuti.db.Utility.convertThai(request.getParameter("password"));
 			 
 			String[] parts = stmtcat_id.split("-");
-		    String partID = parts[0]; // ID
-		    String partName = parts[1]; // Name
+			String partID = parts[0]; // ID
+	     	String partTopic = parts[1];// topicp
+	    	String partName = parts[2]; // Name
+		       	
+	
 		       	
 	
 String sql = "UPDATE cat_id " +
 			"SET cat_topic = '"+ stmttopic + "' " +
+			", username= '"+ username + "' " +	
 			" WHERE cat_id = '" + partID + "' ";
 		    
 String sql2 = "UPDATE tb_user " +
-		"SET cat_topic = '"+ stmttopic + "' " +
-		" WHERE cat_id = '" + partID + "' ";		    
+		"SET username = '"+ username+ "' " +
+		", 	password = '"+ password+ "' " +			
+		", name = '"+ username + "' " +	
+		", cat_topic = '"+ stmttopic + "' " +	
+		" WHERE username = '" + partName+ "'AND  cat_topic = '" + partTopic + "' ";		    
 			
      stmt.execute(sql);
      stmt.execute(sql2);

@@ -27,7 +27,12 @@ background-repeat: no-repeat; }
 <% String u = (String) request.getSession().getAttribute("userid"); 
 Integer roleid = (Integer) request.getSession().getAttribute("role_id");
 Integer catid = (Integer) request.getSession().getAttribute("cat_id"); 
-
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+if(roleid > 1){
+	response.sendRedirect("home.jsp");
+}
 %>
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
@@ -71,8 +76,10 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
             
             <th>ผู้ดูแล</th>
             <th>วันที่เพิ่ม</th>
-            <th>จำนวนกระทู้</th>  
-              
+            <th>จำนวนกระทู้</th> 
+            <th>แก้ไข</th>
+            <th>ลบ</th> 
+            
 			  </tr>
     </thead>
 
@@ -102,10 +109,11 @@ Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 						<%= rs.getInt("num_reply") %>
 						</TD>
 						<TD>
-						 <a href="EditUpdateCat.jsp?id=<%=rs.getString("cat_id")%>-<%=rs.getString("username")%>">แก้ไข</a>
+						 <a href="EditUpdateCat.jsp?id=<%=rs.getString("cat_id")%>-<%=rs.getString("cat_topic")%>-<%=rs.getString("username")%>"><img src="img/edit.png" width="20" height="20" /></a>
+						       
 						</TD>
 						<TD>
-						 <a href="delCat.jsp?id=<%=rs.getString("cat_id")%>-<%=rs.getString("username")%>">ลบ</a>
+						 <a href="delCat.jsp?id=<%=rs.getString("cat_id")%>-<%=rs.getString("cat_topic")%>-<%=rs.getString("username")%>"><img src="img/delete.png" width="20" height="20"  /></a>
 						</TD>
 						
 						</tr>

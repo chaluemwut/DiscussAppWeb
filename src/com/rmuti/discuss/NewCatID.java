@@ -75,6 +75,9 @@ public class NewCatID extends HttpServlet {
  		response.setContentType("text/html;charset=UTF-8");
  		PrintWriter out = response.getWriter();
  		String u = (String) request.getSession().getAttribute("userid");
+ 		if(u == null){
+ 			response.sendRedirect("login.jsp");
+ 		}	
  		
  		
 
@@ -83,8 +86,8 @@ public class NewCatID extends HttpServlet {
  		
  		//String owner = com.rmuti.db.Utility.convertThai(mul.getParameter("param_name"));
  		String cat_Topic = com.rmuti.db.Utility.convertThai(mul.getParameter("cat_topic"));
- 		String username = com.rmuti.db.Utility.convertThai(mul.getParameter("username"));
- 		String password = com.rmuti.db.Utility.convertThai(mul.getParameter("password"));
+ 		//String username = com.rmuti.db.Utility.convertThai(mul.getParameter("username"));
+ 		//String password = com.rmuti.db.Utility.convertThai(mul.getParameter("password"));
  		
  		
  		try {					
@@ -138,12 +141,14 @@ public class NewCatID extends HttpServlet {
 
  					String datetime = day+" "+month+" "+year+" "+time;
  					
+ 					String username="NoUser";
+ 					String password="null";
  					String adderess="null";
  					String tel="null";
  					String email="null";
 
  					String sql = "insert into cat_id (cat_topic,username,date_time,num_reply) values ('"+cat_Topic+"','"+username+"','"+datetime+"',0)";
- 					String sql2 ="insert into tb_user (username,password,name,userAddress,userTel,userEmail,role_id) values ('"+username+"','"+password+"','"+username+"','"+adderess+"','"+tel+"','"+email+"',2)";
+ 					String sql2 ="insert into tb_user (username,password,name,userAddress,userTel,userEmail,cat_topic,role_id) values ('"+username+"','"+password+"','"+username+"','"+adderess+"','"+tel+"','"+email+"','"+cat_Topic+"',2)";
  					int return_val = stmt.executeUpdate(sql);				
  					int return_val2 = stmt.executeUpdate(sql2);
  					
@@ -153,20 +158,23 @@ public class NewCatID extends HttpServlet {
  					
  					
  					if(return_val==1) {
- 						out.print("เพิ่มหมวดกระทู้เรียบร้อยแล้ว !!!<BR>");
- 						out.print("<A HREF=\"Allcat.jsp\">ดูกระทู้ทั้งหมด</A>");
+ 						response.sendRedirect("ShowCatOK.jsp");
+ 						//out.print("เพิ่มหมวดกระทู้เรียบร้อยแล้ว !!!<BR>");
+ 						//out.print("<A HREF=\"Allcat.jsp\">ดูกระทู้ทั้งหมด</A>");
  					}
  					else {
- 						out.print("ไม่สามารถเพิ่มกระทู้ได้ กรุณาลองใหม่!!!<BR>");
- 						out.print("<A HREF=\"topic.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
+ 						response.sendRedirect("ShowCatNoOK.jsp");
+ 						//out.print("ไม่สามารถเพิ่มกระทู้ได้ กรุณาลองใหม่!!!<BR>");
+ 						//out.print("<A HREF=\"topic.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
  					}
  				}
  				stmt.close();
  				con.close();
  			}
  		} catch(Exception e) {
- 			out.print("ไม่สามารถเพิ่มกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
- 			out.print("<A HREF=\"topic.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
+ 			response.sendRedirect("ShowCatNoOK.jsp");
+ 			//out.print("ไม่สามารถเพิ่มกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
+ 			//out.print("<A HREF=\"topic.jsp\">กลับไปสร้างกระทู้ใหม่</A>");
  			System.out.println(e);
  		}
  		}

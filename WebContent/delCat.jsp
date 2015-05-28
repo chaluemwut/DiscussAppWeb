@@ -26,7 +26,11 @@ background-repeat: no-repeat; }
 
 </head>
 <body background="img/bg2.jpg"  >
-<% String u = (String) request.getSession().getAttribute("userid"); %>
+<% String u = (String) request.getSession().getAttribute("userid");
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+%>
 
 
 <FORM name="form1" ACTION="NewCatID" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
@@ -61,12 +65,12 @@ Statement  stmt= null;
 			 stmt = con.createStatement();
 			
 	    	
-	       	 String stmtcat_id = request.getParameter("id");
+			 String stmt_id =com.rmuti.db.Utility.convertThai(request.getParameter("id"));
 	     	
-	     	String[] parts = stmtcat_id.split("-");
+	     	String[] parts = stmt_id.split("-");
 	     	String partID = parts[0]; // ID
-	     	String partName = parts[1]; // Name
-	       	
+	     	String partTopic = parts[1];// topicp
+	    	String partName = parts[2]; // Name
 		       	
 	
 			String sql = "DELETE FROM cat_id " +
@@ -75,15 +79,18 @@ Statement  stmt= null;
 		
 		       
 			String sql2 = "DELETE FROM tb_user " +
-					" WHERE username = '" + partName + "' ";
+					" WHERE username = '" + partName + "' AND cat_topic = '" + partTopic + "' ";
    			
 			stmt.execute(sql);
 			stmt.execute(sql2);
    			
    			 out.println("ลบเรียบร้อยแล้ว");
-   			 out.println(partID);
-   			 out.println(stmtcat_id);
-   			 out.println(partName);
+   			// out.println(partID);
+   			// out.println(stmtcat_id);
+   			// out.println(partName);
+   			 
+   			//out.println(partTopic);
+  			 
 				} catch (Exception e) {
 				// TODO Auto-generated catch block
 				out.println(e.getMessage());

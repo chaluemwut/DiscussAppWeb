@@ -36,7 +36,7 @@ background-repeat: no-repeat; }
                    
                     <tr>
                              <td><p1><font size=3><dd>1.นายศุภเดช  น้อยใหญ่ รหัสประจำตัว 553333013007-6</dd><br>
-                               ดูแลระบบ  Andriod 
+                               ดูแลระบบ  Andriod โทร.083-6608454
                              
                             </font> </p1></td>
                             
@@ -46,7 +46,8 @@ background-repeat: no-repeat; }
                       <tr>
                              
                              <td><p1><font size=3><dd>2.นายณัฐพล  ผงบุญตา  รหัสประจำตัว 553333013008-4</dd><br>
-                             ดูแลระบบ   Web application 
+                             ดูแลระบบ   Web application โทร.084-3915843 <br>
+        E-mail: Nut_tapon_12@hotmail.com
                              
                            </font>  </p1></td>
                             

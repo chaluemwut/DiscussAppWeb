@@ -74,6 +74,9 @@ public class NewPostBoard extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String u = (String) request.getSession().getAttribute("userid");
+		if(u == null){
+			response.sendRedirect("login.jsp");
+		}
 		
 		if (MultipartFormDataRequest.isMultipartFormData(request)) {
 
@@ -187,12 +190,16 @@ String id="";
 					
 					
 			    	if(return_val==1&&return_val2==1) {
-					out.print("สร้างกระทู้ของคุณเรียบร้อย !!!<BR>");
-					out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">ดูกระทู้ทั้งหมด</A><BR>");
+					
+			    	response.sendRedirect("ShowPostOk.jsp?id="+cat_id+"");	
+			    	//out.print("สร้างกระทู้ของคุณเรียบร้อย !!!<BR>");
+					//out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">ดูกระทู้ทั้งหมด</A><BR>");
 					
 			    	} else {
-			    			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่!!!<BR>");
-			    			out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">กลับไปตอบกระทู้ใหม่</A>");
+			    		
+			    			response.sendRedirect("ShowPostNo.jsp?id="+cat_id+"");	
+			    			//out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่!!!<BR>");
+			    			//out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">กลับไปตอบกระทู้ใหม่</A>");
 			    	}
 			    	stmt.close();
 			    	con.close();
@@ -211,8 +218,9 @@ String id="";
 					
 			}
 		} catch(Exception e) {
-			out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
-			out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">กลับไปสร้างกระทู้ใหม่</A>");
+			response.sendRedirect("ShowPostNo.jsp?id="+cat_id+"");	
+			//out.print("ไม่สามารถสร้างกระทู้ได้ กรุณาลองใหม่ !!!<BR>"); 
+			//out.print("<A HREF=\"ShowCatID.jsp?id="+cat_id+"\">กลับไปสร้างกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
 		}

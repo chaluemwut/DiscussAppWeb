@@ -50,6 +50,9 @@ public class PostReply extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String u = (String) request.getSession().getAttribute("userid");
+		if(u == null){
+			response.sendRedirect("login.jsp");
+		}
 		
 		String name = u;
 		//String name = request.getParameter("param_name");
@@ -96,19 +99,25 @@ public class PostReply extends HttpServlet {
 				int return_val = stmt.executeUpdate(sql);
 				int return_val2 = stmt.executeUpdate(sql2);
 				if(return_val==1&&return_val2==1) {
-					out.print("ได้รับคำตอบของคุณเรียบร้อย !!!<BR>");				
-					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">ย้อนกลับไปดูกระทู้ที่โพส</A>");
+					
+					response.sendRedirect("ShowPostReplyOk.jsp?id="+id+"");	
+					//out.print("ได้รับคำตอบของคุณเรียบร้อย !!!<BR>");				
+					//out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">ย้อนกลับไปดูกระทู้ที่โพส</A>");
 				} else {
-					out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่!!!<BR>");
-					out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
+					
+					response.sendRedirect("ShowPostReplyNo.jsp?id="+id+"");	
+					//out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่!!!<BR>");
+					//out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
 				}
 				stmt.close();
 				con.close();
 			}
 
 		} catch(Exception e) {
-			out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่ !!!<BR>");
-			out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
+			
+			response.sendRedirect("ShowPostReplyNo.jsp?id="+id+"");	
+			//out.print("ไม่สามารถเก็บคำตอบลงกระทู้ได้ กรุณาลองใหม่ !!!<BR>");
+			//out.print("<A HREF=\"ShowTopic.jsp?id="+id+"\">กลับไปตอบกระทู้ใหม่</A>");
 			System.out.println(e);
 		}
 	}

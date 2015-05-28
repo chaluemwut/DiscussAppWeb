@@ -24,6 +24,11 @@ background-repeat: no-repeat; }
 </head>
 <body background="img/bg2.jpg"  >
 
+<%//--------------------------------facebook.com/share/  --------https://www.addthis.com/dashboard#gallery/ra-5563689270a6e4f5%>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5563689270a6e4f5" async="async"></script>
+<% //------------------------------------------------------%>
+
 
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
@@ -38,10 +43,19 @@ background-repeat: no-repeat; }
 			</ul></td>
        </tr>
         
+
+
+	<form name="formSearch" method="get" action="Search.jsp" onSubmit="JavaScript:return fncSubmit();" >
+	 
+	    <tr>
+	      <th>กระทู้ที่สนใจ
+	      <input  name="txtKeyword" type="text" id="txtKeyword" >
+	      <input  class="btn btn-danger" type="submit" value="ค้นหา"></th>
+	    </tr>
+
+	</form>
         
-       
-        
-        
+    
                  <%//----------------------------------------------------------------------------------------- %>
         <tr>        
         <td> 
@@ -52,6 +66,7 @@ background-repeat: no-repeat; }
        			
         		//out.println(u);
 				request.setCharacterEncoding("UTF-8");
+				
 			try {
 				Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
@@ -81,7 +96,7 @@ background-repeat: no-repeat; }
 					
 	<%
 	while(rs.next()) {
-		String id = new String(rs.getString("cat_id").getBytes(),"TIS-620");
+		String id = new String(rs.getString("cat_id").getBytes());
 		String url="ShowCatIDNo.jsp?id="+id;
 %>
 	<tbody>
@@ -89,9 +104,9 @@ background-repeat: no-repeat; }
 		
 		<TD>
 		<A HREF="<%= url %>">						
-		<%= new String(rs.getString("cat_topic").getBytes(),"TIS-620") %></A>
+		<%= new String(rs.getString("cat_topic").getBytes()) %></A>
 		</TD>
-		<TD><%= new String(rs.getString("date_time").getBytes(),"TIS-620") %></TD>
+		<TD><%= new String(rs.getString("date_time").getBytes()) %></TD>
 		<TD>
 		 <center><%= rs.getInt("num_reply") %></center>
 		</TD>
@@ -111,7 +126,9 @@ background-repeat: no-repeat; }
 					stmt.close();
 					con.close();
 				}
-				} catch(Exception e) {
+				} 
+			
+			catch(Exception e) {
 					out.print("เกิดข้อผิดพลาดกับการแสดงกระทู้ทั้งหมด");
 					System.out.println(e);
 				}
@@ -138,93 +155,173 @@ background-repeat: no-repeat; }
        			
         		//out.println(u);
 				request.setCharacterEncoding("UTF-8");
-			try {
-				Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
-				//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
-				//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("select * from post order by topic_id DESC;");
-
-			if(con != null) {
-				if(rs != null) {
-	%>
-	       
 			
-				<table class="table  table-hover " style="width: 100%;">
-    <thead>
-    <center><br><h3>กระทู้ล่าสุด</h3>	<BR><BR>
-        <tr>
-            <th>รหัส</th>
-            <th></th>
-            <th>ชื่อกระทู้</th>
-            <th>ชื่อคนโพส</th>
-            <th>จำนวนตอบ-วันที่โพส</th>  
-              
-			  </tr>
-    </thead>
+    			int row_page = 10; // จำนวนรายการหรือเรคอร์ดที่ต้องการแสดงใน 1 หน้า
+    			int total_row=0; // จำนวนรายการหรือเรคอร์ดทั้งหมดที่ดึงมาจากฐานข้อมูลเพื่อนำมาแสดง
+    			
+    			try{
+    			// ขั้นตอนที่ 1 โหลดคลาสไดรเวอร์
+    			Class.forName("org.gjt.mm.mysql.Driver");
+    			// ขั้นตอนที่ 2 เปิดการเชื่อมต่อไปยังระบบฐานข้อมูล
+    			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+    			// ขั้นตอนที่ 3 ติดต่อกับฐานข้อมูลโดยใช้คำสั่ง SQL
+    			Statement stmt = con.createStatement();
+    			// หาจำนวนเรคอร์ดทั้งหมดที่มีอยู่ในตาราง guestbook แลวเก็บค่านี้ไว้ในตัวแปร total_row
+    			ResultSet rs = stmt.executeQuery("SELECT count(*) AS num FROM post ");
+    			//ResultSet myresult0 = stmt.executeQuery("SELECT count(*) AS num FROM guestbook");
+    			
+    			while(rs.next())
+    			{
+    				total_row = rs.getInt("num");
+    			}
+    			//rs.close();
+    			// คำนวณหาตัวเลขจำนวนหน้าที่จะแสดง แล้วเก็บตัวเลขนี้ไว้ในตัวแปร total_page
+    			int total_page = (int)Math.ceil((double)total_row/(double)row_page);
+    			//out.println("<b>มีผู้เซ็นสมุดเยี่ยมชม "+total_row+" รายการ แสดงออกมาให้ดูหน้าละ "+row_page);
+    			//out.println("รายการ จากทั้งหมด "+total_page+" หน้า</b><br><br>");
+    			int screen,start;
+    			// ถ้าไม่มีการส่งตัวแปร screen มา แสดงว่าผู้ชมเปิดดูข้อมูลหน้านี้เป็นหน้าแรก
+    			if(request.getParameter("screen")==null) {
+    				screen=1;
+    			}	
+    			// ถ้ามีการส่งตัวแปร screen มา แสดงว่าผู้ชมต้องการดูข้อมูลหน้านั้น
+    			// แปลงค่าตัวแปร screen ที่ส่งมาเป็นสตริง ให้เป็นตัวเลข เพื่อจะนำไปใช้ในการตรวจสอบ
+    			else{
+    				screen = Integer.parseInt(request.getParameter("screen"));
+    			}	
+    			if(screen>=1 && screen<=total_page)
+    			{
+    				// คำนวณหาข้อมูลเริ่มต้นในฐานข้อมูล
+    				start = (screen-1)*row_page;
+    				String sql = "SELECT topic_id,cat_id,topic,description,owner,date_time,img,top_id,num_reply  FROM post ORDER BY topic_id DESC LIMIT "+start+","+row_page;
+    				ResultSet myresult = stmt.executeQuery(sql);
+    				// ขั้นตอนที่ 4 จัดการกับผลลัพธ์ที่ได้จากคำสั่ง SQL
+    				//out.println("<center><b>สมุดเยี่ยมชม<br>");
+    				//out.println("<a href='signguest.jsp'>เซ็นสมุดเยี่ยมชม</a></b></center><br>");
+    				%>
+    				
+    					<table class="table  table-hover " style="width: 100%;">
+    		        <thead>
+    		        <center><br><h3>กระทู้ล่าสุด</h3>	<BR><BR>
+    		            <tr>
+    		               
+    		                <th></th>
+    		                <th>ชื่อกระทู้</th>
+    		                <th>ชื่อคนโพส</th>
+    		                <th>จำนวนตอบ-วันที่โพส</th>  
+    		                  
+    		    			  </tr>
+    		        </thead>
+    				
+    				<% 
+    				
+    				while(myresult.next())
+    				{
+    					
+    					String id = new String(myresult.getString("topic_id").getBytes());
+    					String img = new String(myresult.getString("img").getBytes());
+    					String top_id = new String(myresult.getString("top_id").getBytes());
+    					String url="ShowTopicNo.jsp?id="+id;
+    					
+    					Integer top = Integer.valueOf(top_id);	
+    				if(top < 2){
+    				%>	
+    					<tbody>
+    		    						<tr  >
+    		    						
+    		    						<TD>
+    		    						 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
+    		    						</TD>
+    		    						<TD>
+    		    						<A HREF="<%= url %>">						
+    		    						<%= new String(myresult.getString("topic").getBytes()) %></A>
+    		    						</TD>
+    		    							<TD><%= new String(myresult.getString("owner").getBytes()) %></TD>
+    		    						<TD>
+    		    						(<%= myresult.getInt("num_reply") %>-<%= myresult.getString("date_time") %>)
+    		    						</TD>
+    		    						</tr>
+    				
+    				<%
+    				
+    				}
+    				}
+    				%>
+    				
+    				</tbody>					
+    							</table></center>
+    						
+    			
+			
 
-					
-	<%
-					while(rs.next()) {
-						String id = new String(rs.getString("topic_id").getBytes(),"TIS-620");
-						String img = new String(rs.getString("img").getBytes(),"TIS-620");
-						String url="ShowTopicNo.jsp?id="+id;
-	%>
-					<tbody>
-						<tr  >
-						<TD ><%= id %></TD>
-						<TD>
-						 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
-						</TD>
-						<TD>
-						<A HREF="<%= url %>">						
-						<%= new String(rs.getString("topic").getBytes(),"TIS-620") %></A>
-						</TD>
-						<TD><%= new String(rs.getString("owner").getBytes(),"TIS-620") %></TD>
-						<TD>
-						(<%= rs.getInt("num_reply") %>-<%= rs.getString("date_time") %>)
-						</TD>
-						</tr>
-					<%
-	
-					}
-					%>
-	
-					</tbody>					
-					</table></center>
 				
-				<%
-				}
-					rs.close();
-					stmt.close();
-					con.close();
-				}
-				} catch(Exception e) {
+				 </td>
+				 </tr></table></center>
+				
+   <center>
+   	<%
+    				// แสดงลิงค์ของแต่ละหน้าทั้งหมดที่มี
+    				if(screen>1) {
+    					out.println("<a href='home.jsp?screen="+(screen-1)+"' ><b>ย้อนกลับ</b></a>");
+    				}	
+    				for(int i=1; i<=total_page; i++)
+    				{
+    					if(i==screen){
+    						out.println(" <b>["+i+"]</b>");
+    					}
+    					else{
+    						out.println(" | <a href='home.jsp?screen="+i+"'>"+i+"</a> | ");
+    					}
+    				}
+    				
+    				if(screen<total_page) {
+    					out.println("<a href='home.jsp?screen="+(screen+1)+"' ><b>ถัดไป</b></a>");
+    				}	
+    				myresult.close();
+    				stmt.close();
+    				con.close();
+    				
+    			}
+    			
+    			
+    			else{
+    				out.println("<center><b>ไม่พบข้อมูล</b></center>");
+    			}	
+    			}catch(Exception e) {
 					out.print("เกิดข้อผิดพลาดกับการแสดงกระทู้ทั้งหมด");
 					System.out.println(e);
 				}
 			
-				%>
-	
- 				
- 				 </td>
- 				 </tr></table></center>
-  				
-       
-       
-       
-     
+    			
+    		%>
+   
+ </center>
 
 </table></center>
- 
-
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
            <td> <center> <img src="img/below1.png" width="100%" height="100%" align="middle" /></center></td>
       </tr> 
 
 </table></center>
+
+<script language="javascript">
+function fncSubmit()
+{
+	
+	if(document.formSearch.txtKeyword.value == "" )
+	{
+		alert('กรุณาใส่หัวข้อกระทู้ที่จะค้นหา');
+		document.formSearch.cat_topic.focus();		
+		return false;
+	}
+	
+	
+				
+	document.formSearch.submit();
+}
+
+</script>
 
 
 <script src="js/jquery.js"></script>

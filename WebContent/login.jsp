@@ -18,6 +18,24 @@ background-repeat: no-repeat; }
 <body background="img/bg2.jpg" style="height: 54px; ">
 <br>
 <%
+if (session.getAttribute("userid") != null) {
+			} else if (request.getCookies() != null) {
+				String cookieName = "ck_user";
+				Cookie cookies[] = request.getCookies();
+				Cookie myCookie = null;
+		   if (cookies != null) {
+				for (int i = 0; i < cookies.length; i++) {
+		   if (cookies[i].getName().equals(cookieName)) {
+				myCookie = cookies[i];
+			break;
+		   }
+				}
+		   }
+	 	if (myCookie != null) {
+			session.setAttribute("userid", myCookie.getValue());
+		}
+		}
+if (session.getAttribute("userid") == null) {
 
 
 %>
@@ -36,8 +54,8 @@ background-repeat: no-repeat; }
        </tr>
         <tr>
            <td>
-           <br>
-
+           <br>    
+        
 			<P1><center><Font Size=5>Login</Font></center></p1>
 			<br><center><table border="1" bordercolor="White" cellpadding="10" cellspacing="0" >
                     
@@ -52,11 +70,16 @@ background-repeat: no-repeat; }
                              <td>password :</td>
                              <td><input type="password" name="pwd" /></td>
                       </tr>
+                      <tr>
+                      		<td colspan="2" align="center">
+							<input type="checkbox" name="save" value="1" />จำค่าล็อกอิน<br />	</td>	
+						</tr>	
+					
   </table> 
-  
+	 
 
-<br><input  class="btn btn-success" type="submit" value="Login" />
-
+<br><input  class="btn btn-success" type="submit" value="Login" /><br>
+<p align="right">* หากมีปัญหาในการเข้าระบบให้ติดต่อผู้ดูแลระบบ<a href="Contact.jsp">!!คลิก</a></p>
 
 </center>
            
@@ -65,7 +88,12 @@ background-repeat: no-repeat; }
 		 </td>
         
         </tr>
-       
+ <%
+}else{
+	   response.sendRedirect("homeLogin.jsp");
+
+}
+ %>      
 
 
 </table></center>

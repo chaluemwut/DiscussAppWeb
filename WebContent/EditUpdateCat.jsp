@@ -26,7 +26,11 @@ background-repeat: no-repeat; }
 
 </head>
 <body background="img/bg2.jpg"  >
-<% String u = (String) request.getSession().getAttribute("userid"); %>
+<% String u = (String) request.getSession().getAttribute("userid");
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+%>
 
 
 
@@ -59,14 +63,16 @@ Statement  stmt= null;
 			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
 			 stmt = con.createStatement();
 			 
-			    String stmtid = request.getParameter("id"); 
+			    String stmtid = com.rmuti.db.Utility.convertThai(request.getParameter("id"));
 				String[] parts = stmtid.split("-");
-		     	String partID = parts[0]; // ID
-		     	String partName = parts[1]; // Name
-		       	
+				String partID = parts[0]; // ID
+		     	String partTopic = parts[1];// topicp
+		    	String partName = parts[2]; // Name
+			       	
+		
 			    
 				String sql = "SELECT * FROM  cat_id WHERE cat_id = '" + partID + "'  ";
-				String sql2 = "SELECT * FROM  tb_user WHERE username = '" + partName + "'  ";
+				String sql2 = "SELECT * FROM  tb_user WHERE username = '" + partName + "'AND  cat_topic = '" + partTopic + "'  ";
 	
 			ResultSet rec = stmt.executeQuery(sql);
 			
@@ -74,13 +80,13 @@ Statement  stmt= null;
 				rec.next();
 				
 		%>
-<FORM name="form1" ACTION="EditSaveCat.jsp?id=<%=rec.getString("cat_id")%>-<%=rec.getString("username")%>" METHOD="post"  onSubmit="JavaScript:return fncSubmit();" >	
+<FORM name="form1" ACTION="EditSaveCat.jsp?id=<%=rec.getString("cat_id")%>-<%=rec.getString("cat_topic")%>-<%=rec.getString("username")%>" METHOD="post"  onSubmit="JavaScript:return fncSubmit();" >	
 		
          <center><TABLE>
 		<center><br><h2>แก้ไข</h2><BR><br></center>
 		
 					<TR><TD>หัวข้อ  &nbsp; &nbsp;<INPUT TYPE="text" NAME="cat_topic" value="<%=rec.getString("cat_topic")%>"></TD></TR>
-		            <tr><td>ชื่อผู้ใช้   &nbsp;<input type="text" name="username"value="<%=rec.getString("username")%>"></td>	</tr>	           
+		                    
 		            
 		
 				

@@ -31,7 +31,11 @@ background-repeat: no-repeat; }
 
 </head>
 <body background="img/bg2.jpg"  >
-<% String u = (String) request.getSession().getAttribute("userid"); %>
+<% String u = (String) request.getSession().getAttribute("userid");
+if(u == null){
+	response.sendRedirect("login.jsp");
+}
+%>
 
 <FORM name="form1" ACTION="" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 
