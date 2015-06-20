@@ -1,0 +1,153 @@
+package com.rmuti.android;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.ws.http.HTTPException;
+
+import javazoom.upload.MultipartFormDataRequest;
+
+import com.mysql.jdbc.Statement;
+import com.rmuti.db.Conndb;
+import com.rmuti.db.DBUtil;
+import com.rmuti.db.Utility;
+
+
+/**
+ * Servlet implementation class RegisterAPI
+ */
+@WebServlet("/RegisterAPI")
+public class RegisterAPI extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public RegisterAPI() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+///////////////////
+   
+
+	//////////////////////////////
+  
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	//request.setCharacterEncoding("UTF-8");
+  	  // response.setContentType("text/html;charset=UTF-8");
+//    	String topicid = null;
+//  		String catid=null;	
+//  		Statement stmt = null;
+//  		Connection connect = null;
+//  		PrintWriter out = response.getWriter();
+//    			String username = request.getParameter("username");
+//    			String password =  request.getParameter("password");
+//    			String name =  Utility.convertThai( request.getParameter("name").toString());
+//    			String tel = request.getParameter("tel");
+//    			String email =  request.getParameter("email");
+//    			String address =   request.getParameter("address");
+//    			System.out.println(name);
+//    			JsonObject jsonRet = null;
+//    			
+//    			// connect database		
+//    			DBUtil db = new DBUtil();
+//    			
+//    			
+//    			try {
+//    				if (db.isRegister(username, password,address, name, tel, email)) {
+//    					JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
+//    							"status", "0");
+//    					jsonObj.add("is_register", "yes");
+//    					jsonRet = jsonObj.build();
+//    				} else {
+//    					JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
+//    							"status", "0");
+//    					jsonObj.add("is_register", "no");
+//    					jsonRet = jsonObj.build();
+//    				}
+//    			} catch (Exception e) {
+//    				
+//    			}
+//    			out.print(jsonRet.toString());
+//    			
+    		}
+
+	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		JsonObject jsonRet = null;
+		Conndb conndb = new Conndb();	
+		HttpSession session = request.getSession();
+	    request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		ServletOutputStream outJson = response.getOutputStream();
+		String topicid = null;
+  		String catid=null;	
+  		Statement stmt = null;
+  		Connection connect = null;
+  		
+    			String username = request.getParameter("username");
+    			String password =  request.getParameter("password");
+    			String name =request.getParameter("name");
+    			String tel = request.getParameter("tel");
+    			String email =  request.getParameter("email");
+    			String address = request.getParameter("address");
+    			
+    			
+    			System.out.println(name);
+    		
+    			System.out.println(address);
+    			
+    			// connect database		
+    			DBUtil db = new DBUtil();
+    			
+    			
+    			try {
+   				if (db.isRegister(username, password,address, name, tel, email)) {
+    					JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
+   							"status", "0");  
+                       jsonObj.add("is_register", "yes");
+    					jsonRet = jsonObj.build();
+    				} else {
+   					JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
+    							"status", "0");
+    					jsonObj.add("is_register", "no");
+    					jsonRet = jsonObj.build();
+    				}
+    			} catch (Exception e) {
+    				
+   			}
+    			outJson.print(jsonRet.toString());
+	}
+	
+	
+ 	@SuppressWarnings("unused")
+ 	private String request(String parameter) {
+ 		// TODO Auto-generated method stub
+ 		return null;
+ 	}
+
+ }

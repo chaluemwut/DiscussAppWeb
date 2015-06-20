@@ -1,4 +1,4 @@
-package com.rmuti.discuss;
+package com.rmuti.android;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,8 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +22,16 @@ import javax.servlet.http.HttpSession;
 import com.rmuti.db.Conndb;
 
 /**
- * Servlet implementation class dd11
+ * Servlet implementation class jsonShowCatID
  */
-@WebServlet("/dd11")
-public class dd11 extends HttpServlet {
+@WebServlet("/jsonShowCatID")
+public class jsonShowCatID extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public dd11() {
+    public jsonShowCatID() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,12 +47,6 @@ public class dd11 extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -68,69 +65,24 @@ public class dd11 extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
 
 
 @SuppressWarnings("deprecation")
-public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException, ServletException, InstantiationException, IllegalAccessException{
+public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException, ServletException{
 	
-
-	
-	
-	String username;
-	String password; 
-	Statement stmt=null;
-	ResultSet rs=null;
-	Connection con=null;
-
-	String driver="com.example.mysql.Driver";
-	Class.forName(driver).newInstance();
-
-	try{
-	 String url="jdbc:mysql://localhost/log";
-	 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird","root","pong084391"); 
-	 stmt=con.createStatement();
-
-	}catch(Exception e){
-	e.printStackTrace(); 
-
-	}
-	if(!con.isClosed()){
-	username=request.getParameter("user");
-	password=request.getParameter("pass");
-	rs=stmt.executeQuery("select * from login");
-	while(rs.next()){
-	if(rs.getString("user")==username && rs.getString("pass")==password){
-	// out.println("vinod");
-	 System.out.println("vinod kakad");
-	}else{
-
-	// out.println("vinod");
-	 System.out.println("vinod kakad else part");
-	}
-	}
-	 // else{
-	//  out.println("lost");
-	  System.out.println("vinod kakad else lost part");
-//	  } 
-
-
-	  }
-
-
-	  
-
-	 
+	Conndb conndb = new Conndb();	
+	HttpSession session = request.getSession();
+    request.setCharacterEncoding("UTF-8");
+	response.setContentType("text/html;charset=UTF-8");
+	PrintWriter out = response.getWriter();
+	JsonObject jsonObj2 = conndb.isUser2();
+	out.print(jsonObj2);
 	
 	
 }
 
 }
+

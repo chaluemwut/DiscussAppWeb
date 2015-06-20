@@ -1,4 +1,4 @@
-package com.rmuti.discuss;
+package com.rmuti.android;
 
 import java.io.IOException;
 
@@ -12,20 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.rmuti.db.Conndb;
-
+import com.rmuti.db.DBUtil;
 
 /**
- * Servlet implementation class LoginAPI
+ * Servlet implementation class chkUserAPI
  */
-@WebServlet("/LoginAPI")
-public class LoginAPI extends HttpServlet {
+@WebServlet("/chkUserAPI")
+public class chkUserAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginAPI() {
+    public chkUserAPI() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,32 +35,29 @@ public class LoginAPI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String email = request.getParameter("email");
 		JsonObject jsonRet = null;
 		ServletOutputStream out = response.getOutputStream();
 		// connect database		
-		Conndb db = new Conndb();
-		
-		
+		DBUtil db = new DBUtil();
 		try {
-			if (db.isUser3(username, password)) {
+			if (db.chkUser(username,email)) {
 				JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
 						"status", "0");
-				jsonObj.add("is_user", "yes");
+				jsonObj.add("chk_user", "yes");
 				jsonRet = jsonObj.build();
 			} else {
 				JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
 						"status", "0");
-				jsonObj.add("is_user", "no");
+				jsonObj.add("chk_user", "no");
 				jsonRet = jsonObj.build();
 			}
 		} catch (Exception e) {
 			
 		}
 		out.print(jsonRet.toString());
-	}
-
 	
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

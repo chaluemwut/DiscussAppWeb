@@ -1,39 +1,33 @@
-package com.rmuti.discuss;
+package com.rmuti.android;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import javazoom.upload.UploadException;
+
 import com.rmuti.db.Conndb;
 
-
 /**
- * Servlet implementation class jsonAllCat
- * @param <JSONArray>
+ * Servlet implementation class jsonPost_reply
  */
-@WebServlet("/jsonAllCat")
-public class jsonAllCat<JSONArray> extends HttpServlet {
+@WebServlet("/jsonPost_reply3")
+public class jsonPost_reply3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public jsonAllCat() {
+    public jsonPost_reply3() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -71,23 +65,27 @@ public class jsonAllCat<JSONArray> extends HttpServlet {
 	}
 
 
+	@SuppressWarnings("deprecation")
+	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException, ServletException{
+		
+		Conndb conndb = new Conndb();	
+		HttpSession session = request.getSession();
+	    request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		String topic_id = request.getParameter("topic_id");
+		String cat_id = request.getParameter("cat_id");
+		//request.getSession().putValue("user_id","user");
+		conndb.catID2=cat_id;
+		conndb.toppicId2=topic_id;
+		JsonObject jsonObj = conndb.PostAPI3();
+		
+		out.print(jsonObj);
+		
+		
+	}
 
-@SuppressWarnings("deprecation")
-public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException, ServletException{
-	
-	Conndb Conndb = new Conndb();	
-	HttpSession session = request.getSession();
-    request.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html;charset=UTF-8");
-	PrintWriter out = response.getWriter();
 	
 	
-	//request.getSession().putValue("user_id","user");
-	JsonObject jsonObj = Conndb.isUser();
-	out.print(jsonObj);
-	
-	
+
 }
-
-}
-

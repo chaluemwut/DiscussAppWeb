@@ -71,6 +71,7 @@ public class NewPostBoard extends HttpServlet {
 	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException, UploadException{
 		
 		
+        //request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String u = (String) request.getSession().getAttribute("userid");
@@ -89,6 +90,10 @@ public class NewPostBoard extends HttpServlet {
 		String topic = com.rmuti.db.Utility.convertThai(mul.getParameter("param_topic"));
 		String desc  = com.rmuti.db.Utility.convertThai(mul.getParameter("param_desc"));
 		UploadFile file = (UploadFile) mul.getFiles().get("img_pd") ;
+		
+		
+		
+		
 		UploadBean up = new UploadBean();
 		/*request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html;charset=UTF-8");

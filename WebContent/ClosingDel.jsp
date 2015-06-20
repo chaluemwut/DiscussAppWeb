@@ -81,7 +81,7 @@ try {
 	%>
 	<center><table class="table  table-hover " style="width: 80%;">
     		        <thead>
-    		        <center><br><h3>กระทู้ที่ค้นหา</h3>	<BR><BR>
+    		        <center><br><h3>กระทู้ที่แจ้งลบ</h3>	<BR><BR>
     		            <tr>
     		               
     		                <th></th>
