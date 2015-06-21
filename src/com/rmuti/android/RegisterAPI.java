@@ -2,6 +2,7 @@ package com.rmuti.android;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -103,7 +104,7 @@ public class RegisterAPI extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		ServletOutputStream outJson = response.getOutputStream();
+		
 		String topicid = null;
   		String catid=null;	
   		Statement stmt = null;
@@ -122,25 +123,43 @@ public class RegisterAPI extends HttpServlet {
     			System.out.println(address);
     			
     			// connect database		
-    			DBUtil db = new DBUtil();
-    			
-    			
     			try {
-   				if (db.isRegister(username, password,address, name, tel, email)) {
-    					JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
-   							"status", "0");  
-                       jsonObj.add("is_register", "yes");
-    					jsonRet = jsonObj.build();
-    				} else {
-   					JsonObjectBuilder jsonObj = Json.createObjectBuilder().add(
-    							"status", "0");
-    					jsonObj.add("is_register", "no");
-    					jsonRet = jsonObj.build();
-    				}
-    			} catch (Exception e) {
-    				
-   			}
-    			outJson.print(jsonRet.toString());
+    	  			Class.forName("org.gjt.mm.mysql.Driver").newInstance();					
+    	  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");	
+    	  			stmt = (Statement) connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+    	  		} catch (SQLException e1) {
+    	  			// TODO Auto-generated catch block
+    	  			e1.printStackTrace();
+    	  		
+    	  		} catch (InstantiationException e1) {
+    	  		// TODO Auto-generated catch block
+    	  			e1.printStackTrace();
+    	  		} catch (IllegalAccessException e1) {
+    	  		// TODO Auto-generated catch block
+    	  		e1.printStackTrace();
+    	  		} catch (ClassNotFoundException e) {
+    	  		// TODO Auto-generated catch block
+    	  			e.printStackTrace();
+    	  		}
+    			
+    						
+    			
+    			String sql=("insert into tb_user (username,password,userAddress,name,userTel,userEmail,cat_topic,role_id) "
+    					+ " values ('"+username+"','"+password+"','"+address+"','"+name+"','"+tel+"','"+email+"',0,3)");
+    			//ResultSet rs = stmt.executeQuery(String.format("insert into member (Username,Password,Name,Tel,Email)  values (username= '%s' and password= '%s' and name= '%s' and tel= '%s' and email= '%s')",username,password,name,tel,email)); 
+    			
+    		        
+    		        
+    		       try {
+					stmt.executeUpdate(sql);
+			
+    		       
+					stmt.close();
+						connect.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}  
 	}
 	
 	
