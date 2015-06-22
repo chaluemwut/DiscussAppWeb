@@ -101,8 +101,8 @@ try {
 			
 			          
 			
-    		    		String id = new String(rec.getString("topic_id").getBytes(),"TIS-620");
-    					String img = new String(rec.getString("img").getBytes(),"TIS-620");
+    		    		String id = new String(rec.getString("topic_id").getBytes());
+    					String img = new String(rec.getString("img").getBytes());
     					String url="ShowTopic.jsp?id="+id;
 
     					
@@ -117,9 +117,9 @@ try {
     		    						</TD>
     		    						<TD>
     		    						<A HREF="<%= url %>">						
-    		    						<%= new String(rec.getString("topic").getBytes(),"TIS-620") %></A>
+    		    						<%= new String(rec.getString("topic").getBytes()) %></A>
     		    						</TD>
-    		    							<TD><%= new String(rec.getString("owner").getBytes(),"TIS-620") %></TD>
+    		    							<TD><%= new String(rec.getString("owner").getBytes()) %></TD>
     		    						<TD>
     		    						(<%= rec.getInt("num_reply") %>-<%= rec.getString("date_time") %>)
     		    						</TD>

@@ -89,7 +89,7 @@ if(roleid > 1){
 	
 					while(rs.next()) {
 						
-						String id = new String(rs.getString("cat_id").getBytes(),"TIS-620");
+						String id = new String(rs.getString("cat_id").getBytes());
 						//String User =new String(rs.getString("username").getBytes(),"TIS-620");
 						//session.setAttribute("UserDel", User); 	
 						//session.setAttribute("UserDel", rs.getString(3));
@@ -102,10 +102,10 @@ if(roleid > 1){
 						
 						<TD>
 						<A HREF="<%= url %>">						
-						<%= new String(rs.getString("cat_topic").getBytes(),"TIS-620") %></A>
+						<%= new String(rs.getString("cat_topic").getBytes()) %></A>
 						</TD>
-						<TD><%= new String(rs.getString("username").getBytes(),"TIS-620") %></TD>
-						<TD><%= new String(rs.getString("date_time").getBytes(),"TIS-620") %></TD>
+						<TD><%= new String(rs.getString("username").getBytes()) %></TD>
+						<TD><%= new String(rs.getString("date_time").getBytes()) %></TD>
 						<TD>
 						<%= rs.getInt("num_reply") %>
 						</TD>

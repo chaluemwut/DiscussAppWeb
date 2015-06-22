@@ -51,6 +51,7 @@ background-repeat: no-repeat; }
         	 <tr>        
              <td>   
        				<%
+    request.setCharacterEncoding("UTF-8");   				
 	String keyword = "";
 	if(request.getParameter("txtKeyword") != null) {
 		keyword = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));

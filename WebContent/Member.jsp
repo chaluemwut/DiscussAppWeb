@@ -107,11 +107,11 @@ if(roleid > 1){
         	%>
         			<tr>		 
 						
-				     <td><%= new String(rs.getString("username").getBytes(),"TIS-620") %></td>					
-					 <td><%= new String(rs.getString("password").getBytes(),"TIS-620") %></td>
-					  <td><%= new String(rs.getString("name").getBytes(),"TIS-620") %></td>					  				
-					 <td><%= new String(rs.getString("userTel").getBytes(),"TIS-620") %></td>
-					  <td><%= new String(rs.getString("userEmail").getBytes(),"TIS-620") %></td>
+				     <td><%= new String(rs.getString("username").getBytes()) %></td>					
+					 <td><%= new String(rs.getString("password").getBytes()) %></td>
+					  <td><%= new String(rs.getString("name").getBytes()) %></td>					  				
+					 <td><%= new String(rs.getString("userTel").getBytes()) %></td>
+					  <td><%= new String(rs.getString("userEmail").getBytes()) %></td>
 					   <td>ผู้ดูแลระบบ</td>
         			</tr>   	 
         	<%
@@ -122,12 +122,12 @@ if(roleid > 1){
         				if(rs2 != null) {
         					while(rs2.next()) {	
         	%>			<tr>	
-        					 <td><%= new String(rs2.getString("username").getBytes(),"TIS-620") %></td>					
-        					 <td><%= new String(rs2.getString("password").getBytes(),"TIS-620") %></td>
-        					  <td><%= new String(rs2.getString("name").getBytes(),"TIS-620") %></td>        					 		
-        					 <td><%= new String(rs2.getString("userTel").getBytes(),"TIS-620") %></td>
-        					  <td><%= new String(rs2.getString("userEmail").getBytes(),"TIS-620") %></td>
-        					     <td>ดูแล<%= new String(rs2.getString("cat_topic").getBytes(),"TIS-620") %></td>
+        					 <td><%= new String(rs2.getString("username").getBytes()) %></td>					
+        					 <td><%= new String(rs2.getString("password").getBytes()) %></td>
+        					  <td><%= new String(rs2.getString("name").getBytes()) %></td>        					 		
+        					 <td><%= new String(rs2.getString("userTel").getBytes()) %></td>
+        					  <td><%= new String(rs2.getString("userEmail").getBytes()) %></td>
+        					     <td>ดูแล<%= new String(rs2.getString("cat_topic").getBytes()) %></td>
         				</tr>
         
         
@@ -140,11 +140,11 @@ if(roleid > 1){
         				if(rs3 != null) {
         					while(rs3.next()) {	
         	%>			<tr>	
-        					 <td><%= new String(rs3.getString("username").getBytes(),"TIS-620") %></td>					
-        					 <td><%= new String(rs3.getString("password").getBytes(),"TIS-620") %></td>
-        					  <td><%= new String(rs3.getString("name").getBytes(),"TIS-620") %></td>        					  			
-        					 <td><%= new String(rs3.getString("userTel").getBytes(),"TIS-620") %></td>
-        					  <td><%= new String(rs3.getString("userEmail").getBytes(),"TIS-620") %></td>
+        					 <td><%= new String(rs3.getString("username").getBytes()) %></td>					
+        					 <td><%= new String(rs3.getString("password").getBytes()) %></td>
+        					  <td><%= new String(rs3.getString("name").getBytes()) %></td>        					  			
+        					 <td><%= new String(rs3.getString("userTel").getBytes()) %></td>
+        					  <td><%= new String(rs3.getString("userEmail").getBytes()) %></td>
         					     <td>ผู้ใช้ทั่วไป</td>
         				</tr>
         

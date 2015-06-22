@@ -129,8 +129,8 @@ if(u == null){
 		if(con != null) {
 			if(rs != null) {
 				while(rs.next()) {
-					cat_id = new String(rs.getString("cat_id").getBytes(),"TIS-620"); 
-					cat_topic = new String(rs.getString("cat_topic").getBytes(),"TIS-620");
+					cat_id = new String(rs.getString("cat_id").getBytes()); 
+					cat_topic = new String(rs.getString("cat_topic").getBytes());
 %>
 					<html lang="en">
 					<head link href="css/bootstrap.min.css" rel="stylesheet">
@@ -180,14 +180,14 @@ if(u == null){
 
 <% 
 			while(rs2.next()) {
-					  String id = new String(rs2.getString("topic_id").getBytes(),"TIS-620");
-					  String img = new String(rs2.getString("img").getBytes(),"TIS-620");
-					  String delCat = new String(rs2.getString("cat_id").getBytes(),"TIS-620");
-					  String name = new String(rs2.getString("owner").getBytes(),"TIS-620");
+					  String id = new String(rs2.getString("topic_id").getBytes());
+					  String img = new String(rs2.getString("img").getBytes());
+					  String delCat = new String(rs2.getString("cat_id").getBytes());
+					  String name = new String(rs2.getString("owner").getBytes());
 					  session.setAttribute("Catdel", delCat);
 						String url="ShowTopic.jsp?id="+id;
 						
-					  String top = new String(rs2.getString("top_id").getBytes(),"TIS-620");
+					  String top = new String(rs2.getString("top_id").getBytes());
 					  Integer topid= Integer.valueOf(top);
 					  
 			 if(screen == 1){	  
@@ -200,10 +200,10 @@ if(u == null){
                  
 			       	        
 			        <td><img src=<%="images/"+img%> class="img-responsive" width="70" height="70">&nbsp; Top<td>
-					<td><A  HREF="<%= url %>"> <%= new String(rs2.getString("topic").getBytes(),"TIS-620") %></A></td>					
-				     <td><%= new String(rs2.getString("owner").getBytes(),"TIS-620") %></td>					
-					 <td><%= new String(rs2.getString("num_reply").getBytes(),"TIS-620") %></td>
-					  <td><%= new String(rs2.getString("date_time").getBytes(),"TIS-620") %></td>
+					<td><A  HREF="<%= url %>"> <%= new String(rs2.getString("topic").getBytes()) %></A></td>					
+				     <td><%= new String(rs2.getString("owner").getBytes()) %></td>					
+					 <td><%= new String(rs2.getString("num_reply").getBytes()) %></td>
+					  <td><%= new String(rs2.getString("date_time").getBytes()) %></td>
 			<% 		  
 					if(roleid ==1){	
 			%>		
@@ -257,14 +257,14 @@ if(u == null){
 			 ResultSet rs3 = stmt.executeQuery(sql3);
 				if(rs3 != null) {
 					while(rs3.next()) {
-						  String id = new String(rs3.getString("topic_id").getBytes(),"TIS-620");
-						  String img = new String(rs3.getString("img").getBytes(),"TIS-620");
-						  String delCat = new String(rs3.getString("cat_id").getBytes(),"TIS-620");
-						  String name = new String(rs3.getString("owner").getBytes(),"TIS-620");
+						  String id = new String(rs3.getString("topic_id").getBytes());
+						  String img = new String(rs3.getString("img").getBytes());
+						  String delCat = new String(rs3.getString("cat_id").getBytes());
+						  String name = new String(rs3.getString("owner").getBytes());
 						  session.setAttribute("Catdel", delCat);
 							String url="ShowTopic.jsp?id="+id;
 							
-						  String top = new String(rs3.getString("top_id").getBytes(),"TIS-620");
+						  String top = new String(rs3.getString("top_id").getBytes());
 						  Integer topid= Integer.valueOf(top);
 						  
 						 if(topid == 0){ 	
@@ -277,10 +277,10 @@ if(u == null){
 			       	  
 			       	     
 			        <td><img src=<%="images/"+img%> class="img-responsive" width="70" height="70"><td>
-					<td><A  HREF="<%= url %>"> <%= new String(rs3.getString("topic").getBytes(),"TIS-620") %></A></td>					
-				     <td><%= new String(rs3.getString("owner").getBytes(),"TIS-620") %></td>					
-					 <td><%= new String(rs3.getString("num_reply").getBytes(),"TIS-620") %></td>
-					  <td><%= new String(rs3.getString("date_time").getBytes(),"TIS-620") %></td>
+					<td><A  HREF="<%= url %>"> <%= new String(rs3.getString("topic").getBytes()) %></A></td>					
+				     <td><%= new String(rs3.getString("owner").getBytes()) %></td>					
+					 <td><%= new String(rs3.getString("num_reply").getBytes()) %></td>
+					  <td><%= new String(rs3.getString("date_time").getBytes()) %></td>
 					  
 				<% 		  
 					if(roleid ==1){	

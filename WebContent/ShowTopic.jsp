@@ -75,9 +75,9 @@ if(u == null){
 		if(con != null) {
 			if(rs != null) {
 				while(rs.next()) {
-					topic_id = new String(rs.getString("topic_id").getBytes(),"TIS-620"); 
-					topic = new String(rs.getString("topic").getBytes(),"TIS-620");
-					img = new String(rs.getString("img").getBytes(),"TIS-620");
+					topic_id = new String(rs.getString("topic_id").getBytes()); 
+					topic = new String(rs.getString("topic").getBytes());
+					img = new String(rs.getString("img").getBytes());
 %>
 					<html lang="en">
 					<head link href="css/bootstrap.min.css" rel="stylesheet">
@@ -94,9 +94,9 @@ if(u == null){
 					<br><center><H3>หัวข้อเรื่อง <%=topic %></H3></center><br>
 					<center><img src=<%="images/"+img%> width="500" height="500" ></center> <br>						
 					
-					<br><br>&nbsp;รายละเอียด : <font size=4>		<%= new String(rs.getString("description").getBytes(),"TIS-620") %></font><br><br>					
-					&nbsp;จากคุณ : <%= new String(rs.getString("owner").getBytes(),"TIS-620") %><br>
-					&nbsp;วันที่ : <%= new String(rs.getString("date_time").getBytes(),"TIS-620") %><hr><br>
+					<br><br>&nbsp;รายละเอียด : <font size=4>		<%= new String(rs.getString("description").getBytes()) %></font><br><br>					
+					&nbsp;จากคุณ : <%= new String(rs.getString("owner").getBytes()) %><br>
+					&nbsp;วันที่ : <%= new String(rs.getString("date_time").getBytes()) %><hr><br>
 					<p align="right"><a  class="btn btn-danger" href="ShowCatID.jsp?id=<%=rs.getString("cat_id")%>" role="button">ดูกระทู้ทั้งหมด</a><br></p>
 				
 					<h4>&nbsp;ตอบ</h4>
@@ -110,9 +110,9 @@ if(u == null){
 			if(rs2 != null) {
 				while(rs2.next()) {
 %>
-					<br>&nbsp;รายละเอียด : <%= new String(rs2.getString("description").getBytes(),"TIS-620") %><br><br>
-					&nbsp;จากคุณ : <%= new String(rs2.getString("name").getBytes(),"TIS-620") %><br>
-					&nbsp;วันที่ : <%= new String(rs2.getString("date_time").getBytes(),"TIS-620") %><HR>
+					<br>&nbsp;รายละเอียด : <%= new String(rs2.getString("description").getBytes()) %><br><br>
+					&nbsp;จากคุณ : <%= new String(rs2.getString("name").getBytes()) %><br>
+					&nbsp;วันที่ : <%= new String(rs2.getString("date_time").getBytes()) %><HR>
 					
 					
 <%

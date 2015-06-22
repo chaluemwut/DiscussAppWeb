@@ -148,7 +148,7 @@ if(u == null){
 					
 	<%
 	while(rs.next()) {
-		String id = new String(rs.getString("cat_id").getBytes(),"TIS-620");
+		String id = new String(rs.getString("cat_id").getBytes());
 		
 		String url="ShowCatID.jsp?id="+id;
 		
@@ -159,9 +159,9 @@ if(u == null){
 		
 		<TD>
 		<A HREF="<%= url %>">						
-		<%= new String(rs.getString("cat_topic").getBytes(),"TIS-620") %></A>
+		<%= new String(rs.getString("cat_topic").getBytes()) %></A>
 		</TD>
-		<TD><%= new String(rs.getString("date_time").getBytes(),"TIS-620") %></TD>
+		<TD><%= new String(rs.getString("date_time").getBytes()) %></TD>
 		<TD>
 		 <center><%= rs.getInt("num_reply") %></center>
 		</TD>
@@ -302,9 +302,9 @@ if(u == null){
         				while(myresult.next())
         				{
         					
-        					String id = new String(myresult.getString("topic_id").getBytes(),"TIS-620");
-        					String img = new String(myresult.getString("img").getBytes(),"TIS-620");
-        					String top_id = new String(myresult.getString("top_id").getBytes(),"TIS-620");
+        					String id = new String(myresult.getString("topic_id").getBytes());
+        					String img = new String(myresult.getString("img").getBytes());
+        					String top_id = new String(myresult.getString("top_id").getBytes());
         					String url="ShowTopic.jsp?id="+id;
         					
         					Integer top = Integer.valueOf(top_id);	
@@ -318,9 +318,9 @@ if(u == null){
         		    						</TD>
         		    						<TD>
         		    						<A HREF="<%= url %>">						
-        		    						<%= new String(myresult.getString("topic").getBytes(),"TIS-620") %></A>
+        		    						<%= new String(myresult.getString("topic").getBytes()) %></A>
         		    						</TD>
-        		    							<TD><%= new String(myresult.getString("owner").getBytes(),"TIS-620") %></TD>
+        		    							<TD><%= new String(myresult.getString("owner").getBytes()) %></TD>
         		    						<TD>
         		    						(<%= myresult.getInt("num_reply") %>-<%= myresult.getString("date_time") %>)
         		    						</TD>
