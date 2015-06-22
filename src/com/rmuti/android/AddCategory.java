@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+import com.rmuti.Config;
 import com.rmuti.db.Conndb;
 
 /**
@@ -72,7 +73,7 @@ public class AddCategory extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
-	 			 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+	 			 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 	 			 stmt = (Statement) con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 	 			ResultSet rs = stmt.executeQuery("select * from cat_id order by cat_id asc");
 	 			

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+import com.rmuti.Config;
 import com.rmuti.db.Conndb;
 
 /**
@@ -64,7 +65,7 @@ public class UpdateCategory extends HttpServlet {
 			Statement  stmt= null; 
 					try {
 						Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-						 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+						 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 						 stmt = (Statement) con.createStatement();
 						
 				    	
@@ -86,7 +87,7 @@ public class UpdateCategory extends HttpServlet {
 						      stmt.execute(sql);
 						      stmt.execute(sql2);
 						     
-						      out.println("������º��������");
+						      out.println("แก้ไขเรียบร้อยแร้ว");
 							} catch (Exception e) {
 							// TODO Auto-generated catch block
 							out.println(e.getMessage());

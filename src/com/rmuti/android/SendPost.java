@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.rmuti.Config;
 import com.rmuti.db.Utility;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
@@ -57,7 +58,7 @@ public class SendPost extends HttpServlet {
   		PrintWriter out = response.getWriter();
   		try {
   			Class.forName("org.gjt.mm.mysql.Driver").newInstance();					
-  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");	
+  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
   			stmt = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
   		} catch (SQLException e1) {
   			// TODO Auto-generated catch block

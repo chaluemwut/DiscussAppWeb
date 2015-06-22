@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>    
@@ -57,7 +58,7 @@ if(roleid > 1){
 				request.setCharacterEncoding("UTF-8");
 			try {
 				Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);		
 				Statement stmt = con.createStatement();
 				String sql = "select  * from cat_id order by cat_id asc ";
 				ResultSet rs = stmt.executeQuery(sql);
@@ -139,8 +140,8 @@ if(roleid > 1){
 				%>
 	           
  				 <br>	
-  				<center><a class="btn btn-danger" href="topic.jsp" role="button">เพิ่มกระทู้ใหม่</a></center>	
-       
+  				<center><a class="btn btn-primary" href="topic.jsp" role="button">เพิ่มกระทู้ใหม่</a></center><br>
+       	<p align="center"><a  class="btn btn-danger" href="homeLogin.jsp" role="button">กลับไปหน้าแรก</a></p><br>
        
        
         </td>

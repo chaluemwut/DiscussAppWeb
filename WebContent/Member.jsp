@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>    
@@ -91,7 +92,7 @@ if(roleid > 1){
         		
         			
         			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-        			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");    			
+        			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);   			
         			Statement stmt = con.createStatement();
         			String sql = "(select * from tb_user where role_id= "+1+" ORDER BY user_id DESC )";    
         			String sql2 = "(select * from tb_user where role_id= "+2+" ORDER BY user_id DESC)";  

@@ -27,6 +27,7 @@ import javazoom.upload.UploadFile;
 import org.apache.jasper.tagplugins.jstl.core.Out;
 
 import com.mysql.jdbc.PreparedStatement;
+import com.rmuti.Config;
 import com.sun.javafx.geom.Area;
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
@@ -39,7 +40,7 @@ public class DBUtil {
 	public DBUtil() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird","root","pong084391");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,7 +111,7 @@ public class DBUtil {
 		//chek USER,Email
 		try {
   			Class.forName("org.gjt.mm.mysql.Driver").newInstance();					
-  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");	
+  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
   			stmt = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
   		} catch (SQLException e1) {
   			// TODO Auto-generated catch block

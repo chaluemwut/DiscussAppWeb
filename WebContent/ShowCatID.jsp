@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>    
@@ -76,7 +77,7 @@ if(u == null){
 	
 		
 		Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 		//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 		//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 		
@@ -142,7 +143,7 @@ if(u == null){
 					<body>
 					 <br>
 					<%if(roleid ==1){ %> 
-	                 <p align="right"><a  class="btn btn-success" href="ClosingDel.jsp" role="button">กระทู้ที่แจ้งลบ</a></p><br>
+	                 <p align="right"><a  class="btn btn-success" href="ClosingDel.jsp" role="button">กระทู้ที่แจ้งลบ</a></p>
 					
 					<%} %>
 					<br><center><H3><%=cat_topic %></H3></center><br>	

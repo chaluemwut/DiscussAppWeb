@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.rmuti.Config;
+
 import javazoom.upload.MultipartFormDataRequest;
 import javazoom.upload.UploadBean;
 import javazoom.upload.UploadException;
@@ -124,7 +126,7 @@ public class SendImage extends HttpServlet {
 		//String Topicid ="5";
 	 file.setFileName(String.valueOf(d.getTime()+".png" ));
 	 String imgGetName =  String.valueOf(file.getFileName());
-	 up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images");
+	 up.setFolderstore(Config.path_file);
 		up.store(mul);
 		 
 		try {		
@@ -135,7 +137,7 @@ String id="";
 				
 			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			
 	

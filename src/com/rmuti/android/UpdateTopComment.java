@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.rmuti.Config;
 import com.rmuti.db.Conndb;
 
 /**
@@ -64,7 +65,7 @@ public class UpdateTopComment extends HttpServlet {
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();
 			con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+					"jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			stmt = con.createStatement();
 
 			
@@ -75,7 +76,7 @@ public class UpdateTopComment extends HttpServlet {
 
 				stmt.execute(sql);
 
-				out.println("������º�������� 1");
+				out.println("แก้ไขเรียบร้อยแร้ว 1");
 			}
 			else if (status.equals("0")) {
 				int top = 0;
@@ -84,7 +85,7 @@ public class UpdateTopComment extends HttpServlet {
 
 				stmt.execute(sql);
 
-				out.println("������º�������� 0");
+				out.println("แก้ไขเรียบร้อยแร้ว 0");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

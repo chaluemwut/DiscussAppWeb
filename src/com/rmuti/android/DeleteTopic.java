@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+import com.rmuti.Config;
 import com.rmuti.db.Conndb;
 
 /**
@@ -61,7 +62,7 @@ public class DeleteTopic extends HttpServlet {
 			Statement  stmt= null; 
 					try {
 						Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-						 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+						 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 						 stmt = (Statement) con.createStatement();
 						
 				    	
@@ -75,7 +76,7 @@ public class DeleteTopic extends HttpServlet {
 						stmt.execute(sql);
 						stmt.execute(sql2);
 			   			
-			   			 out.println("ź���º��������");
+			   			 out.println("ลบเรียบร้อยแล้ว");
 			   			
 			  		
 							} catch (Exception e) {

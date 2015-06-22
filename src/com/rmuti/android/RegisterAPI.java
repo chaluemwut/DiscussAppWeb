@@ -23,6 +23,7 @@ import javax.xml.ws.http.HTTPException;
 import javazoom.upload.MultipartFormDataRequest;
 
 import com.mysql.jdbc.Statement;
+import com.rmuti.Config;
 import com.rmuti.db.Conndb;
 import com.rmuti.db.DBUtil;
 import com.rmuti.db.Utility;
@@ -125,7 +126,7 @@ public class RegisterAPI extends HttpServlet {
     			// connect database		
     			try {
     	  			Class.forName("org.gjt.mm.mysql.Driver").newInstance();					
-    	  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");	
+    	  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
     	  			stmt = (Statement) connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
     	  		} catch (SQLException e1) {
     	  			// TODO Auto-generated catch block

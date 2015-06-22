@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>    
@@ -61,7 +62,7 @@ Connection con = null;
 Statement  stmt= null; 
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			 stmt = con.createStatement();
 			
 	    	

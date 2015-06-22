@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>    
@@ -45,7 +46,7 @@ if(u == null){
         			int totalNumPostReply =0;
         			
         			Class.forName("org.gjt.mm.mysql.Driver");        		
-        			Connection conNum = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");        			
+        			Connection conNum = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);       			
         			Statement stmtNum = conNum.createStatement();        		
         			ResultSet rsNum = stmtNum.executeQuery("SELECT count(*) AS num FROM post  where owner='"+u+"' ");        		
         		
@@ -57,7 +58,7 @@ if(u == null){
         			
         			request.setCharacterEncoding("UTF-8");        			
         			Class.forName("org.gjt.mm.mysql.Driver");        		
-        			Connection conNum2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");        			
+        			Connection conNum2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);      			
         			Statement stmtNum2 = conNum2.createStatement(); 
         			ResultSet rsNumReply = stmtNum2.executeQuery("SELECT count(*) AS num1 FROM post_reply  where name='"+u+"' ");
 
@@ -122,7 +123,7 @@ if(u == null){
 				request.setCharacterEncoding("UTF-8");
 			try {
 				Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");				
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);		
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery("select * from cat_id order by cat_id asc;" );
 
@@ -246,7 +247,7 @@ if(u == null){
         			// ขั้นตอนที่ 1 โหลดคลาสไดรเวอร์
         			Class.forName("org.gjt.mm.mysql.Driver");
         			// ขั้นตอนที่ 2 เปิดการเชื่อมต่อไปยังระบบฐานข้อมูล
-        			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+        			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
         			// ขั้นตอนที่ 3 ติดต่อกับฐานข้อมูลโดยใช้คำสั่ง SQL
         			Statement stmt = con.createStatement();
         			// หาจำนวนเรคอร์ดทั้งหมดที่มีอยู่ในตาราง guestbook แลวเก็บค่านี้ไว้ในตัวแปร total_row

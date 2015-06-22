@@ -13,6 +13,8 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import com.rmuti.Config;
+
 public class Conndb {
 	Connection Conn;
 	Statement Stmt;
@@ -23,7 +25,7 @@ public class Conndb {
 													
 			try {
 				Conn = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/andoird", "root", "pong084391"); 
+						"jdbc:mysql://localhost:3306/"+Config.db_name, Config.db_user, Config.db_password); 
 				Stmt = Conn.createStatement();
 												
 											

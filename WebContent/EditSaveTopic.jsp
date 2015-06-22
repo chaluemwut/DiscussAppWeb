@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.sql.*,java.util.*"%>
@@ -67,7 +68,7 @@ Connection con = null;
 Statement  stmt= null; 
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			 stmt = con.createStatement();
 			
 			 MultipartFormDataRequest mul=new MultipartFormDataRequest(request);
@@ -118,7 +119,7 @@ String sql = "UPDATE post " +
      stmt.execute(sql);
      
 
-		up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images");
+		up.setFolderstore(Config.path_file);
 		up.store(mul);
     
      out.println("แก้ไขเรียบร้อยแร้ว");

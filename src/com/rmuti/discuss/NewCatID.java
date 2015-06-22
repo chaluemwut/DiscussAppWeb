@@ -19,6 +19,7 @@ import org.apache.tomcat.util.buf.UDecoder;
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 import com.mysql.jdbc.UpdatableResultSet;
+import com.rmuti.Config;
 import com.sun.corba.se.impl.util.Utility;
 
 import java.sql.*;
@@ -96,7 +97,7 @@ public class NewCatID extends HttpServlet {
  				
  			
  			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
- 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+ 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
  			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
  			ResultSet rs = stmt.executeQuery("select * from cat_id order by cat_id asc");
  			

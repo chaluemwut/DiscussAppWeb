@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.rmuti.Config;
+
 import java.sql.*;
 
 /**
@@ -85,7 +87,7 @@ public class Login extends HttpServlet {
 				
 		
 		Class.forName("com.mysql.jdbc.Driver"); 
-		java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird","root","pong084391"); 
+		java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 		Statement st= con.createStatement(); 
 		String sql = "SELECT role_id, cat_id, a.username, a.password"
 						+ " FROM tb_user a"

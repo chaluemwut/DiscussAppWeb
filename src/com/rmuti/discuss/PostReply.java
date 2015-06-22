@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.rmuti.Config;
+
 import java.sql.*;
 
 /**
@@ -61,7 +63,7 @@ public class PostReply extends HttpServlet {
 		try {
 			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 			//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 			Statement stmt = con.createStatement();

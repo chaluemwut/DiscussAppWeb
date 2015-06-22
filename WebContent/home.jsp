@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>    
@@ -69,7 +70,7 @@ background-repeat: no-repeat; }
 				
 			try {
 				Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 				//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 				//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 				Statement stmt = con.createStatement();
@@ -163,7 +164,7 @@ background-repeat: no-repeat; }
     			// ขั้นตอนที่ 1 โหลดคลาสไดรเวอร์
     			Class.forName("org.gjt.mm.mysql.Driver");
     			// ขั้นตอนที่ 2 เปิดการเชื่อมต่อไปยังระบบฐานข้อมูล
-    			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+    			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
     			// ขั้นตอนที่ 3 ติดต่อกับฐานข้อมูลโดยใช้คำสั่ง SQL
     			Statement stmt = con.createStatement();
     			// หาจำนวนเรคอร์ดทั้งหมดที่มีอยู่ในตาราง guestbook แลวเก็บค่านี้ไว้ในตัวแปร total_row

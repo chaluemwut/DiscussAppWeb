@@ -19,6 +19,7 @@ import org.apache.tomcat.util.buf.UDecoder;
 import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 import com.mysql.jdbc.UpdatableResultSet;
+import com.rmuti.Config;
 import com.sun.corba.se.impl.util.Utility;
 
 import java.sql.*;
@@ -132,7 +133,7 @@ String id="";
 				
 			
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/andoird", "root", "pong084391");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery("select * from post order by cat_id asc");
 			
@@ -190,7 +191,7 @@ String id="";
 					int return_val2 = stmt.executeUpdate(sql2);
 					
 				
-					up.setFolderstore("C:\\Users\\Administrator\\git\\DiscussAppWeb\\WebContent\\images");
+					up.setFolderstore(Config.path_file);
 					up.store(mul);
 					
 					
