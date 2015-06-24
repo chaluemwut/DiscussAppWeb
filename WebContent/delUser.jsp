@@ -1,12 +1,7 @@
 <%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>   
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="java.sql.Statement" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %> 
+<%@ page import="java.sql.*" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head link href="css/bootstrap.min.css" rel="stylesheet">
@@ -33,15 +28,18 @@ background-repeat: no-repeat; }
 </head>
 <body background="img/bg2.jpg"  >
 <% String u = (String) request.getSession().getAttribute("userid");
-
+Integer roleid = (Integer) request.getSession().getAttribute("role_id");
+Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 if(u == null){
 	response.sendRedirect("login.jsp");
+}
+if(roleid > 1){
+	response.sendRedirect("home.jsp");
 }
 %>
 
 
-
-<FORM name="form1" ACTION="" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
+<FORM name="form1" ACTION="NewCatID" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
@@ -65,7 +63,6 @@ if(u == null){
         
 <%
 
-
 Connection con = null;	
 Statement  stmt= null; 
 		try {
@@ -73,42 +70,35 @@ Statement  stmt= null;
 			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			 stmt = con.createStatement();
 			
-			 String stmtcat_id = com.rmuti.db.Utility.convertThai(request.getParameter("id"));
-			 String stmttopic =com.rmuti.db.Utility.convertThai(request.getParameter("cat_topic"));
-			 String username =com.rmuti.db.Utility.convertThai(request.getParameter("username"));
-			 String password =com.rmuti.db.Utility.convertThai(request.getParameter("password"));
-			 
-			String[] parts = stmtcat_id.split("-");
-			String partID = parts[0]; // ID
-	     	String partTopic = parts[1];// topicp
-	    	String partName = parts[2]; // Name
+	    	
+			 String stmt_id =request.getParameter("id");
+	     	
+	     
 		       	
 	
-		       	
-	
-String sql = "UPDATE cat_id " +
-			"SET cat_topic = '"+ stmttopic + "' " +
-			", username= '"+ username + "' " +	
-			" WHERE cat_id = '" + partID + "' ";
-		    
-String sql2 = "UPDATE tb_user " +
-		"SET username = '"+ username+ "' " +
-		", 	password = '"+ password+ "' " +			
-		", name = '"+ username + "' " +	
-		", cat_topic = '"+ stmttopic + "' " +	
-		" WHERE username = '" + partName+ "'AND  cat_topic = '" + partTopic + "' ";		    
+			String sql = "DELETE FROM tb_user " +
+						" WHERE user_id = '" + stmt_id + "' ";
+		
+		
+		       
 			
-     stmt.execute(sql);
-     stmt.execute(sql2);
-    
-     out.println("แก้ไขเรียบร้อยแร้ว");
-  		
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		out.println(e.getMessage());
-		e.printStackTrace();
-	}
-
+   			
+			stmt.execute(sql);
+			
+   			
+   			 out.println("ลบเรียบร้อยแล้ว");
+   			// out.println(partID);
+   			// out.println(stmtcat_id);
+   			// out.println(partName);
+   			 
+   			//out.println(partTopic);
+  			 
+				} catch (Exception e) {
+				// TODO Auto-generated catch block
+				out.println(e.getMessage());
+					e.printStackTrace();
+				}
+	
 	try {
 		if(stmt!=null){
 			stmt.close();
@@ -119,6 +109,9 @@ String sql2 = "UPDATE tb_user " +
 		out.println(e.getMessage());
 		e.printStackTrace();
 	}
+
+
+
 %>        
       	
       
@@ -128,7 +121,7 @@ String sql2 = "UPDATE tb_user " +
 		
 		<TR><td></td>
 					<TD >
-					 <a class="btn btn-danger" href="Allcat.jsp" role="button">กลับ</a>
+					 <a class="btn btn-danger" href="Member.jsp" role="button">กลับ</a>
 				  
 					</TD></TR>
 					
@@ -150,23 +143,8 @@ String sql2 = "UPDATE tb_user " +
 
 </table></center></FORM>
 
-<script language="javascript">
-function fncSubmit()
-{
-	
-	if(document.form1.cat_topic.value == "" )
-	{
-		alert('กรุณาใส่หัวข้อกระทู้');
-		document.form1.cat_topic.focus();		
-		return false;
-	}
-	
-				
-	document.form1.submit();
-}
 
 
-</script>
          
 
 

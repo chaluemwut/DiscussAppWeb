@@ -28,8 +28,13 @@ background-repeat: no-repeat; }
 </head>
 <body background="img/bg2.jpg"  >
 <% String u = (String) request.getSession().getAttribute("userid");
+Integer roleid = (Integer) request.getSession().getAttribute("role_id");
+Integer catid = (Integer) request.getSession().getAttribute("cat_id"); 
 if(u == null){
 	response.sendRedirect("login.jsp");
+}
+if(roleid > 1){
+	response.sendRedirect("home.jsp");
 }
 %>
 

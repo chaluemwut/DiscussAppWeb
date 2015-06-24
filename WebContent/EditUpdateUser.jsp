@@ -1,12 +1,7 @@
 <%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>   
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="java.sql.Statement" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %> 
+<%@ page import="java.sql.*" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head link href="css/bootstrap.min.css" rel="stylesheet">
@@ -33,15 +28,18 @@ background-repeat: no-repeat; }
 </head>
 <body background="img/bg2.jpg"  >
 <% String u = (String) request.getSession().getAttribute("userid");
+Integer roleid = (Integer) request.getSession().getAttribute("role_id");
+Integer catid = (Integer) request.getSession().getAttribute("cat_id");
 
 if(u == null){
 	response.sendRedirect("login.jsp");
 }
+if(roleid > 1){
+	response.sendRedirect("home.jsp");
+}
 %>
 
 
-
-<FORM name="form1" ACTION="" METHOD="post" enctype="multipart/form-data" onSubmit="JavaScript:return fncSubmit();" >
 
 <center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 80%; " >
 	  <tr>
@@ -56,15 +54,12 @@ if(u == null){
 
 			</ul></td>
        </tr>
-        
-          
-       
+    
         <tr>
         <td>
            <center><TABLE>
         
 <%
-
 
 Connection con = null;	
 Statement  stmt= null; 
@@ -72,37 +67,75 @@ Statement  stmt= null;
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
 			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
 			 stmt = con.createStatement();
-			
-			 String stmtcat_id = com.rmuti.db.Utility.convertThai(request.getParameter("id"));
-			 String stmttopic =com.rmuti.db.Utility.convertThai(request.getParameter("cat_topic"));
-			 String username =com.rmuti.db.Utility.convertThai(request.getParameter("username"));
-			 String password =com.rmuti.db.Utility.convertThai(request.getParameter("password"));
 			 
-			String[] parts = stmtcat_id.split("-");
-			String partID = parts[0]; // ID
-	     	String partTopic = parts[1];// topicp
-	    	String partName = parts[2]; // Name
-		       	
-	
-		       	
-	
-String sql = "UPDATE cat_id " +
-			"SET cat_topic = '"+ stmttopic + "' " +
-			", username= '"+ username + "' " +	
-			" WHERE cat_id = '" + partID + "' ";
-		    
-String sql2 = "UPDATE tb_user " +
-		"SET username = '"+ username+ "' " +
-		", 	password = '"+ password+ "' " +			
-		", name = '"+ username + "' " +	
-		", cat_topic = '"+ stmttopic + "' " +	
-		" WHERE username = '" + partName+ "'AND  cat_topic = '" + partTopic + "' ";		    
+			    String stmtid = request.getParameter("id"); 
+				String sql = "SELECT * FROM tb_user WHERE user_id	 = '" + stmtid + "'  ";
 			
-     stmt.execute(sql);
-     stmt.execute(sql2);
-    
-     out.println("แก้ไขเรียบร้อยแร้ว");
-  		
+			ResultSet rec = stmt.executeQuery(sql);
+		
+			
+		if(rec != null) {			
+				rec.next();
+				
+		%>
+<FORM name="form1" ACTION="EditSaveUser.jsp?id=<%=rec.getString("user_id")%>" METHOD="post" onSubmit="JavaScript:return fncSubmit();" >	
+		
+         <center><TABLE>
+		<center><br><h2>แก้ไขผู้ใช้</h2><BR><br></center>
+		
+                   
+		            	<TR><TD>User name :</TD>
+					<TD><INPUT TYPE="text" NAME="username" value="<%=rec.getString("username")%>"></TD></TR>
+					<TR><TD>Password :</TD>
+					<TD><INPUT TYPE="text" NAME="password" value="<%=rec.getString("password")%>"></TD></TR>
+		
+					<TR><TD>ชื่อ-สกุล :</TD>					
+					<TD><INPUT TYPE="text" NAME="name" value="<%=rec.getString("name")%>"></TD></TR>
+		
+					<TR><TD>อีเมล : </TD>		
+					<TD><INPUT TYPE="text" NAME="email" value="<%=rec.getString("userEmail")%>"></TD></TR>
+					<TR><td>
+					
+					<TR><TD>เบอร์โทรศัพท์ :</TD>					
+					<TD><INPUT TYPE="text" NAME="tel" value="<%=rec.getString("userTel")%>"></TD></TR>
+		
+					<TR><TD>ที่อยู่ :</TD>		
+					<TD><INPUT TYPE="text" NAME="address" value="<%=rec.getString("userAddress")%>"></TD></TR>
+					<TR><td>
+		            
+					
+					<TR><TD>กระทู้ที่ดูแล</TD>					
+					<TD><INPUT TYPE="text" NAME="cat" value="<%=rec.getString("cat_topic")%>">*ใส่ชื่อกระทู้ที่  staffดูแล</TD></TR>
+		
+					<TR><TD>สิทธิ์การเข้าใช้</TD>		
+					<TD><INPUT TYPE="text" NAME="role" value="<%=rec.getString("role_id")%>">*1=admin ,2=staff, 3=user </TD></TR>
+					<TR>
+		            
+					
+					
+		            
+			
+		
+	<%}
+		
+			
+			
+	
+	%>	
+		
+		        
+		
+		</table> 
+		<br>
+		
+		
+		
+	<input class="btn btn-success"  type="submit" value="แก้ไข"> <a class="btn btn-danger" href="homeLogin.jsp" role="button">ยกเลิก</a>
+
+</FORM>
+
+	
+	<% 
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		out.println(e.getMessage());
@@ -111,6 +144,7 @@ String sql2 = "UPDATE tb_user " +
 
 	try {
 		if(stmt!=null){
+			
 			stmt.close();
 			con.close();
 		}
@@ -119,18 +153,16 @@ String sql2 = "UPDATE tb_user " +
 		out.println(e.getMessage());
 		e.printStackTrace();
 	}
+
+
 %>        
       	
       
 		
 		
-		<br><br><br>
 		
-		<TR><td></td>
-					<TD >
-					 <a class="btn btn-danger" href="Allcat.jsp" role="button">กลับ</a>
-				  
-					</TD></TR>
+		
+		
 					
 		</TABLE>
 	</center>
@@ -148,8 +180,7 @@ String sql2 = "UPDATE tb_user " +
            <td> <center> <img src="img/below1.png" width="100%" height="100%" align="middle" /></center></td>
       </tr> 
 
-</table></center></FORM>
-
+</table></center>
 <script language="javascript">
 function fncSubmit()
 {
@@ -165,8 +196,8 @@ function fncSubmit()
 	document.form1.submit();
 }
 
-
 </script>
+
          
 
 

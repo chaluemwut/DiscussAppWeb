@@ -60,7 +60,7 @@ if(roleid > 1){
          <%//----------------------------------------------------------------------------------------- %>
         <tr>        
         <td> 
-        	<center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width: 90%; " >
+        	<center><table background="img/bgtb.png"  border="1" bordercolor="white" cellpadding="10" cellspacing="0" style="width:90%; " >
         	 <tr>        
              <td> 
              	<br><center><H3>รายชื่อสมาชิก</H3></center><br>	
@@ -72,10 +72,10 @@ if(roleid > 1){
         	            
         	            <th>ชือผู้ใช้</th>          
         	            <th>รหัสผ่าน</th>    
-        	            <th>ชื่อจริง</th>        	            
-        	             <th>เบอร์โทร</th>       
-        	            <th>E-mail</th> 
+        	            <th>ชื่อจริง</th> 	             
         	             <th>สถานะผู้ใช้</th> 
+        	               <th>แก้ไข</th> 
+        	             <th>ลบ</th> 
         	           
         				</tr>
         		</thead>	   		
@@ -109,10 +109,10 @@ if(roleid > 1){
 						
 				     <td><%= new String(rs.getString("username").getBytes()) %></td>					
 					 <td><%= new String(rs.getString("password").getBytes()) %></td>
-					  <td><%= new String(rs.getString("name").getBytes()) %></td>					  				
-					 <td><%= new String(rs.getString("userTel").getBytes()) %></td>
-					  <td><%= new String(rs.getString("userEmail").getBytes()) %></td>
+					  <td><%= new String(rs.getString("name").getBytes()) %></td>					 
 					   <td>ผู้ดูแลระบบ</td>
+					   <td> <a href="EditUpdateUser.jsp?id=<%=rs.getString("user_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					
         			</tr>   	 
         	<%
         					
@@ -124,10 +124,10 @@ if(roleid > 1){
         	%>			<tr>	
         					 <td><%= new String(rs2.getString("username").getBytes()) %></td>					
         					 <td><%= new String(rs2.getString("password").getBytes()) %></td>
-        					  <td><%= new String(rs2.getString("name").getBytes()) %></td>        					 		
-        					 <td><%= new String(rs2.getString("userTel").getBytes()) %></td>
-        					  <td><%= new String(rs2.getString("userEmail").getBytes()) %></td>
-        					     <td>ดูแล<%= new String(rs2.getString("cat_topic").getBytes()) %></td>
+        					  <td><%= new String(rs2.getString("name").getBytes()) %></td>         					
+        					  <td>ดูแล<%= new String(rs2.getString("cat_topic").getBytes()) %></td>
+        					  <td> <a href="EditUpdateUser.jsp?id=<%=rs2.getString("user_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+					          <td><a href="delUser.jsp?id=<%=rs2.getString("user_id")%>"><img src="img/delete.png" width="20" height="20"  /></a><td>
         				</tr>
         
         
@@ -142,10 +142,10 @@ if(roleid > 1){
         	%>			<tr>	
         					 <td><%= new String(rs3.getString("username").getBytes()) %></td>					
         					 <td><%= new String(rs3.getString("password").getBytes()) %></td>
-        					  <td><%= new String(rs3.getString("name").getBytes()) %></td>        					  			
-        					 <td><%= new String(rs3.getString("userTel").getBytes()) %></td>
-        					  <td><%= new String(rs3.getString("userEmail").getBytes()) %></td>
+        					  <td><%= new String(rs3.getString("name").getBytes()) %></td>           					 
         					     <td>ผู้ใช้ทั่วไป</td>
+        					 <td> <a href="EditUpdateUser.jsp?id=<%=rs3.getString("user_id")%>"><img src="img/edit.png" width="20" height="20" /></a></td>
+							<td><a href="delUser.jsp?id=<%=rs3.getString("user_id")%>"><img src="img/delete.png" width="20" height="20"  /></a><td>
         				</tr>
         
         
