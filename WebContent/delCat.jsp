@@ -47,7 +47,7 @@ if(roleid > 1){
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
+  			<li role="presentation"><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
  			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
@@ -67,11 +67,13 @@ Connection con = null;
 Statement  stmt= null; 
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
+			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8",Config.db_user,Config.db_password);
 			 stmt = con.createStatement();
 			
 	    	
-			 String stmt_id =com.rmuti.db.Utility.convertThai(request.getParameter("id"));
+			// String stmt_id =com.rmuti.db.Utility.convertThai(request.getParameter("id"));
+			 String stmt_id =request.getParameter("id");
+	     	
 	     	
 	     	String[] parts = stmt_id.split("-");
 	     	String partID = parts[0]; // ID

@@ -25,7 +25,7 @@ public class Conndb {
 													
 			try {
 				Conn = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/"+Config.db_name, Config.db_user, Config.db_password); 
+						"jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8", Config.db_user, Config.db_password); 
 				Stmt = Conn.createStatement();
 												
 											

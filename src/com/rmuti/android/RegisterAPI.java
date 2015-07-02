@@ -126,7 +126,7 @@ public class RegisterAPI extends HttpServlet {
     			// connect database		
     			try {
     	  			Class.forName("org.gjt.mm.mysql.Driver").newInstance();					
-    	  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
+    	  			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8",Config.db_user,Config.db_password);
     	  			stmt = (Statement) connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
     	  		} catch (SQLException e1) {
     	  			// TODO Auto-generated catch block

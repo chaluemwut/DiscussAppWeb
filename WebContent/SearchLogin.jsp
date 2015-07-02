@@ -45,7 +45,7 @@ if(u == null){
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
+  			<li role="presentation"><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
  			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%><a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
@@ -62,8 +62,8 @@ if(u == null){
    	request.setCharacterEncoding("UTF-8");  				
 	String keyword = "";
 	if(request.getParameter("txtKeyword") != null) {
-		keyword = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));
-		
+		//keyword = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));
+		keyword = request.getParameter("txtKeyword");
 	}
 %>
 
@@ -89,10 +89,11 @@ if(u == null){
 	try {
 		Class.forName("com.mysql.jdbc.Driver");
 		
-		connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
+		connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8",Config.db_user,Config.db_password);
 		s = connect.createStatement();
 		
-		String keyword1 = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));
+		//String keyword1 = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));
+		String keyword1 = request.getParameter("txtKeyword");
 		
 	  if(keyword1.equals("") ){
 			  out.println("กรุณาใส่คำที่จะค้นหา !!");
@@ -129,9 +130,9 @@ if(u == null){
 				
 				          
 				
-        		    		String id = new String(rec.getString("topic_id").getBytes(),"TIS-620");
-        					String img = new String(rec.getString("img").getBytes(),"TIS-620");
-        					String top_id = new String(rec.getString("top_id").getBytes(),"TIS-620");
+        		    		String id = new String(rec.getString("topic_id").getBytes());
+        					String img = new String(rec.getString("img").getBytes());
+        					String top_id = new String(rec.getString("top_id").getBytes());
         					String url="ShowTopic.jsp?id="+id;
     
         					
@@ -147,9 +148,9 @@ if(u == null){
         		    						</TD>
         		    						<TD>
         		    						<A HREF="<%= url %>">						
-        		    						<%= new String(rec.getString("topic").getBytes(),"TIS-620") %></A>
+        		    						<%= new String(rec.getString("topic").getBytes()) %></A>
         		    						</TD>
-        		    							<TD><%= new String(rec.getString("owner").getBytes(),"TIS-620") %></TD>
+        		    							<TD><%= new String(rec.getString("owner").getBytes()) %></TD>
         		    						<TD>
         		    						(<%= rec.getInt("num_reply") %>-<%= rec.getString("date_time") %>)
         		    						</TD>

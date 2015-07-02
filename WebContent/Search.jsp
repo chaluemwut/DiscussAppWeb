@@ -1,6 +1,7 @@
+
 <%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>   
 <%@ page import="java.sql.*" %> 
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
@@ -54,7 +55,7 @@ background-repeat: no-repeat; }
     request.setCharacterEncoding("UTF-8");   				
 	String keyword = "";
 	if(request.getParameter("txtKeyword") != null) {
-		keyword = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));
+		keyword = request.getParameter("txtKeyword");
 		
 	}
 %>
@@ -81,10 +82,10 @@ background-repeat: no-repeat; }
 	try {
 		Class.forName("com.mysql.jdbc.Driver");
 		
-		connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);	
+		connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8",Config.db_user,Config.db_password);	
 		s = connect.createStatement();
 		
-		String keyword1 = com.rmuti.db.Utility.convertThai(request.getParameter("txtKeyword"));
+		String keyword1 = request.getParameter("txtKeyword");
 		
 	  if(keyword1.equals("") ){
 			  out.println("กรุณาใส่คำที่จะค้นหา !!");
@@ -121,10 +122,10 @@ background-repeat: no-repeat; }
 				
 				          
 				
-        		    		String id = new String(rec.getString("topic_id").getBytes(),"TIS-620");
-        					String img = new String(rec.getString("img").getBytes(),"TIS-620");
-        					String top_id = new String(rec.getString("top_id").getBytes(),"TIS-620");
-        					String url="ShowTopic.jsp?id="+id;
+        		    		String id = new String(rec.getString("topic_id").getBytes());
+        					String img = new String(rec.getString("img").getBytes());
+        					String top_id = new String(rec.getString("top_id").getBytes());
+        					String url="ShowTopicNo.jsp?id="+id;
     
         					Integer top = Integer.valueOf(top_id);	
             				if(top < 2){
@@ -139,9 +140,9 @@ background-repeat: no-repeat; }
         		    						</TD>
         		    						<TD>
         		    						<A HREF="<%= url %>">						
-        		    						<%= new String(rec.getString("topic").getBytes(),"TIS-620") %></A>
+        		    						<%= new String(rec.getString("topic").getBytes()) %></A>
         		    						</TD>
-        		    							<TD><%= new String(rec.getString("owner").getBytes(),"TIS-620") %></TD>
+        		    							<TD><%= new String(rec.getString("owner").getBytes()) %></TD>
         		    						<TD>
         		    						(<%= rec.getInt("num_reply") %>-<%= rec.getString("date_time") %>)
         		    						</TD>

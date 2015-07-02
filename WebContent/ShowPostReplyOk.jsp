@@ -31,7 +31,7 @@ if(u == null){
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="home.jsp">หน้าหลัก</a></li>
+  			<li role="presentation"><a href="home.jsp">หน้าหลัก</a></li>
   			<li role="presentation" ><a href="About.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="Contact.jsp">ติดต่อเรา</a></li>
  		    <p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	

@@ -48,8 +48,8 @@ if (cookies != null) {
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="home.jsp">หน้าหลัก</a></li>
-  			<li role="presentation" ><a href="About.jsp">เกี่ยวกับเรา</a></li>
+  			<li role="presentation"><a href="home.jsp">หน้าหลัก</a></li>
+  			<li role="presentation"><a href="About.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="Contact.jsp">ติดต่อเรา</a></li>
  			<p align = "right" ><Font Size=2><a href="register.jsp">&nbsp;&nbsp;สมัครสมาชิก</a>&nbsp;<a href="login.jsp">&nbsp;&nbsp;เข้าสู่ระบบ</a></Font></p> 		
 			</ul></td>

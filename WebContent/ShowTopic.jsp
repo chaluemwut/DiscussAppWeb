@@ -44,7 +44,7 @@ if(u == null){
       </tr> 
        <tr>
        		<td><ul class="nav nav-tabs">
-  			<li role="presentation" class="active"><a href="homeLogin.jsp">หน้าหลัก</a></li>
+  			<li role="presentation"><a href="homeLogin.jsp">หน้าหลัก</a></li>
   			<li role="presentation"><a href="AboutLogin.jsp">เกี่ยวกับเรา</a></li>
  			<li role="presentation"><a href="ContactLogin.jsp">ติดต่อเรา</a></li>
  			<p align = "right" ><Font Size=2>สวัสดี คุณ &nbsp;&nbsp;<%out.println(u);%>&nbsp;<a href="logout.jsp">&nbsp;&nbsp;ออกจากระบบ</a></Font></p> 	
@@ -65,7 +65,7 @@ if(u == null){
 	try {
 		
 		Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8",Config.db_user,Config.db_password);
 		//Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
 		//Connection con = DriverManager.getConnection("jdbc:odbc:andoird");
 		Statement stmt = con.createStatement();

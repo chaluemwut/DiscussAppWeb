@@ -59,7 +59,7 @@ public class LoginAPI extends HttpServlet {
 		JsonArrayBuilder jsonArray = Json.createArrayBuilder();
 		while (rs.next()) {
 			
-			 role_id = new String(rs.getString("role_id").getBytes(),"TIS-620");		
+			 role_id = new String(rs.getString("role_id").getBytes());		
 				
 			
 		}

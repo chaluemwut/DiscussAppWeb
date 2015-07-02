@@ -62,7 +62,7 @@ public class DeleteTopic extends HttpServlet {
 			Statement  stmt= null; 
 					try {
 						Class.forName("org.gjt.mm.mysql.Driver").newInstance();			
-						 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name,Config.db_user,Config.db_password);
+						 con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Config.db_name+"?characterEncoding=utf-8",Config.db_user,Config.db_password);
 						 stmt = (Statement) con.createStatement();
 						
 				    	
