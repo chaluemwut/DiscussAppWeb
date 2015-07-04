@@ -58,9 +58,13 @@ try {
 			out.print(jsonObj);
 			System.out.println(txt);
 			
+			conndb.closeConn();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+			
 		}
 	}
 	}

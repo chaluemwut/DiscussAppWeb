@@ -120,6 +120,10 @@ public class AddCategory extends HttpServlet {
 	 					int return_val = stmt.executeUpdate(sql);				
 	 					int return_val2 = stmt.executeUpdate(sql2);
 	 				}
+	 				
+	 				rs.close();
+	 				stmt.close();
+	 				con.close();
 	 			}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

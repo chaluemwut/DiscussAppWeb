@@ -82,7 +82,7 @@ public class jsonPost_reply2 extends HttpServlet {
 		
 		out.print(jsonObj);
 		
-		
+		 conndb.closeConn();
 	}
 
 	

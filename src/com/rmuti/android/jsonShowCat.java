@@ -86,7 +86,7 @@ public void performTask(HttpServletRequest request, HttpServletResponse response
 	
 	out.print(jsonObj2);
 	
-	
+	 conndb.closeConn();
 }
 
 }

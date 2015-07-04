@@ -1,4 +1,3 @@
-
 package com.rmuti.android;
 
 import java.io.IOException;
@@ -27,54 +26,57 @@ import java.sql.*;
 @WebServlet("/jsonEditPost")
 public class jsonEditPost extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public jsonEditPost() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public jsonEditPost() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		performTask(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		performTask(request, response);
 	}
-	public void performTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Conndb conndb = new Conndb();	
+
+	public void performTask(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Conndb conndb = new Conndb();
 		HttpSession session = request.getSession();
-	    request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
+
 		String owner = request.getParameter("owner");
-		//request.getSession().putValue("user_id","user");
-		conndb.Username=owner;
-		
+		// request.getSession().putValue("user_id","user");
+		conndb.Username = owner;
+
 		JsonObject jsonObj;
 		try {
 			jsonObj = conndb.EditPost();
-		
-		
-		out.print(jsonObj);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			}
 
-		
-	
+			out.print(jsonObj);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conndb.closeConn();
+		}
+	}
 
 }

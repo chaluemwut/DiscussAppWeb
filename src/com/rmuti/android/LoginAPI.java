@@ -63,6 +63,7 @@ public class LoginAPI extends HttpServlet {
 				
 			
 		}
+		rs.close();
 		//jsonObj.add("data", jsonArray);
 		//jsonRet = jsonObj.build();
 		} catch (SQLException e1) {
@@ -89,7 +90,12 @@ public class LoginAPI extends HttpServlet {
 				jsonObj.add("username", "null" );
 				jsonRet = jsonObj.build();
 			}
+			
+		
+			stmt.close();
+			
 		} catch (Exception e) {
+			
 			
 		}
 		out.print(jsonRet.toString());

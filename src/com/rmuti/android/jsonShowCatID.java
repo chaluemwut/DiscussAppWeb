@@ -81,7 +81,7 @@ public void performTask(HttpServletRequest request, HttpServletResponse response
 	JsonObject jsonObj2 = conndb.isUser2();
 	out.print(jsonObj2);
 	
-	
+	 conndb.closeConn();
 }
 
 }

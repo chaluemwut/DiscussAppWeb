@@ -58,7 +58,7 @@ public class chkUserAPI extends HttpServlet {
 		out.print(jsonRet.toString());
 	
 	}
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

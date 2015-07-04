@@ -77,6 +77,8 @@ public class Conndb {
 					.add("cat_topic", catTopic).add("userName", UserName)
 					.add("date", dateTime));
 		}
+		rs.close();
+		stmt.close();
 		jsonObj.add("data", jsonArray);
 		jsonRet = jsonObj.build();
 		return jsonRet;
@@ -110,6 +112,8 @@ public class Conndb {
 					.add("dateTime", dateTime).add("img", img)
 					.add("top_id", top).add("CountNum", num));
 		}
+		rs2.close();
+		stmt2.close();
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
@@ -140,6 +144,8 @@ public class Conndb {
 					.add("topic_id", topicid).add("name", name)
 					.add("description", descpReply).add("date_time", datetime));
 		}
+		rs.close();
+		stmt.close();
 		jsonObj3.add("data", jsonArray3);
 		jsonRet = jsonObj3.build();
 		return jsonRet;
@@ -174,10 +180,13 @@ public class Conndb {
 					.add("description", des).add("owner", owner)
 					.add("dateTime", dateTime).add("img", img)
 					.add("top_id", top).add("CountNum", num));
+			rs2.close();
+			stmt2.close();
 		}
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
+		
 	}
 
 	// ----------------------------------------- ----------------
@@ -214,6 +223,8 @@ public class Conndb {
 					.add("dateTime", dateTime).add("img", img)
 					.add("top_id", top).add("CountNum", num));
 		}
+		rs2.close();
+		stmt2.close();
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
@@ -251,6 +262,9 @@ public class Conndb {
 					.add("dateTime", dateTime).add("img", img)
 					.add("top_id", top).add("CountNum", num));
 		}
+		rs2.close();
+		stmt2.close();
+		closeConn();
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
@@ -281,6 +295,8 @@ public class Conndb {
 					.add("username", username).add("date_time", dateTime)
 					.add("num_reply", num));
 		}
+		rs2.close();
+		stmt2.close();
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
@@ -315,6 +331,8 @@ try {
 					.add("dateTime", dateTime).add("img", img)
 					.add("top_id", top).add("CountNum", num));
 		}
+		rs2.close();
+		stmt2.close();
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
@@ -352,6 +370,8 @@ try {
 					.add("dateTime", dateTime).add("img", img)
 					.add("top_id", top).add("CountNum", num));
 		}
+		rs2.close();
+		stmt2.close();
 		jsonObj2.add("data", jsonArray2);
 		jsonRet2 = jsonObj2.build();
 		return jsonRet2;
@@ -376,6 +396,9 @@ try {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
+			 
+			 rs.close();
+				stmt.close();
 			return true;
 		}
 		return false;

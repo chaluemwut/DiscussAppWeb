@@ -153,7 +153,7 @@ String id="";
 					//String sql2 = "update cat_id set num_reply=num_reply+1 where cat_id='"+cat_id+"'";
 					int return_val = stmt.executeUpdate(sql1);
 					//int return_val2 = stmt.executeUpdate(sql2);
-						
+						rs.close();
 						stmt.close();
 				    	con.close();
 							

@@ -79,7 +79,7 @@ public class jsonCatStaff extends HttpServlet {
  	
  	out.print(jsonObj2);
  	
- 	
+ 	 conndb.closeConn();
  }
 
  }

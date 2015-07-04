@@ -79,9 +79,12 @@ public class jsonLonginStaff extends HttpServlet {
  	
  	out.print(jsonObj2);
  	
- 	
- }
+ 	conndb.closeConn();
 
  }
 
+	
+ }
 
+
+	
