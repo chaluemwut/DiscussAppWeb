@@ -1,3 +1,4 @@
+<%@page import="com.rmuti.discuss.ImageResizeWeb"%>
 <%@page import="com.rmuti.Config"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -121,8 +122,10 @@ String sql = "UPDATE post " +
 
 		up.setFolderstore(Config.path_file);
 		up.store(mul);
-    
-     out.println("แก้ไขเรียบร้อยแร้ว");
+		ImageResizeWeb imageResizeWeb = new ImageResizeWeb();
+		imageResizeWeb.getImageResize(String.valueOf(file.getFileName()));
+		
+     	out.println("แก้ไขเรียบร้อยแร้ว");
   		
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
@@ -142,7 +145,6 @@ String sql = "UPDATE post " +
 	}
 %>        
       	
-      
 		
 		
 		<br><br><br>

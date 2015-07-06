@@ -22,6 +22,41 @@ import com.mysql.jdbc.UpdatableResultSet;
 import com.rmuti.Config;
 import com.sun.corba.se.impl.util.Utility;
 
+
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.buf.UDecoder;
+
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+
+import com.mysql.jdbc.UpdatableResultSet;
+import com.rmuti.Config;
+import com.sun.corba.se.impl.util.Utility;
+
+import java.sql.*;
+import java.util.Vector;
+
+import javazoom.upload.*;
+
+import java.io.*;
 import java.sql.*;
 import java.util.Vector;
 
@@ -34,7 +69,8 @@ import java.io.*;
 @WebServlet("/NewPostBoard")
 public class NewPostBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final int IMG_WIDTH = 100;
+	private static final int IMG_HEIGHT = 100;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -96,39 +132,12 @@ public class NewPostBoard extends HttpServlet {
 		
 		
 		UploadBean up = new UploadBean();
-		/*request.setCharacterEncoding("UTF-8");		
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		String owner = request.getParameter("param_name");
-		String topic = request.getParameter("param_topic");
-		String desc = request.getParameter("param_desc");*/
-		
-		/*if (MultipartFormDataRequest.isMultipartFormData(request)){
-			MultipartFormDataRequest mr;
-			mr = new MultipartFormDataRequest(request);
-			
-			UploadBean u = new UploadBean();
-			u.setFolderstore("C:/Users/Administrator/git/DiscussAppWeb/WebContent/img");
-			u.store(mr,"upload");
-		}*/
-		
+
 		
 		
 		try {		
 			
-			/* String filetype = "";
-			 Vector<String> errors = new Vector<String>();
-			 if (file.getData() != null) {
-			 String filename = String.valueOf(file.getFileName());
-			 filetype = filename.substring(filename.lastIndexOf("."), filename.length());
-			 if ((filetype.indexOf("gif") == -1) && (filetype.indexOf("jpeg") == -1) && (filetype.indexOf("jpg") == -1)) {
-			 errors.add("ตรวจสอบชนิดไฟล์รูปภาพ");
-			 }
-			 } else {
-			 errors.add("ตรวจสอบไฟล์รูปภาพ");
-			 }*/
-			
-			
+		
 String id="";			
 				
 			
@@ -181,11 +190,10 @@ String id="";
 					
 				
 					file.setFileName(String.valueOf(d.getTime()+".png" ));
-				//	String sql = "insert into post values('"+id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "',0)";						
-				//	int return_val = stmt.executeUpdate(sql);				
+					String imageName =  String.valueOf(file.getFileName());
+			
 					
-					
-					String sql = "insert into post (cat_id,topic,description,owner,date_time,img,top_id,num_reply) values ('"+cat_id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + String.valueOf(file.getFileName()) + "','"+top+"',0)";	
+					String sql = "insert into post (cat_id,topic,description,owner,date_time,img,top_id,num_reply) values ('"+cat_id+"','"+topic+"','"+desc+"','"+owner+"','"+datetime+"','" + imageName + "','"+top+"',0)";	
 					String sql2 = "update cat_id set num_reply=num_reply+1 where cat_id='"+cat_id+"'";
 					int return_val = stmt.executeUpdate(sql);
 					int return_val2 = stmt.executeUpdate(sql2);
@@ -193,8 +201,8 @@ String id="";
 				
 					up.setFolderstore(Config.path_file);
 					up.store(mul);
-					
-					
+					ImageResizeWeb imageResize =  new ImageResizeWeb();
+					imageResize.getImageResize(imageName);
 			    	if(return_val==1&&return_val2==1) {
 					
 			    	response.sendRedirect("ShowPostOk.jsp?id="+cat_id+"");	
