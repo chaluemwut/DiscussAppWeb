@@ -111,10 +111,13 @@ try {
     				
     					<tbody>
     		    						<tr  >
+    		    						<TD><%if (img.equals("0")){%>
+    		    							 	<img src=<%="img/noimage.jpg"%> class="img-responsive" width="70" height="70">
+    		    							 
+    		    							<% }else{%>  		    						
     		    						
-    		    						<TD>
-    		    						 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
-    		    						</TD>
+    		    								 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
+    		    							 <%} %>
     		    						<TD>
     		    						<A HREF="<%= url %>">						
     		    						<%= new String(rec.getString("topic").getBytes()) %></A>

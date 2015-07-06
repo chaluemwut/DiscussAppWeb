@@ -91,7 +91,16 @@ background-repeat: no-repeat; }
 	               
 					
 					<br><center><H3>หัวข้อเรื่อง <%=topic %></H3></center><br>
-					<center><img src=<%="images/"+img%> width="500" height="500" ></center> <br>					
+					
+					<%if (img.equals("0")){%>
+    		    							<center> <img src=<%="img/noimage.jpg"%> width="500" height="500"></center><br>
+    		    							 
+    		    						<% }else{%>  		    						
+    		    						
+    		    							<center><img src=<%="images/"+img%> width="500" height="500" ></center> <br>	
+    		    						 <%} %>
+					
+								
 					<br><br>&nbsp;รายละเอียด : <font size=4>	<%= new String(rs.getString("description").getBytes()) %></font><br><br>
 					&nbsp;จากคุณ : <%= new String(rs.getString("owner").getBytes()) %><br>
 					&nbsp;วันที่ : <%= new String(rs.getString("date_time").getBytes()) %><hr><br>

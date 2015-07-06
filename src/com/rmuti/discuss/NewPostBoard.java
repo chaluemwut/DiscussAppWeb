@@ -188,8 +188,15 @@ String id="";
 					
 					int top = 0;
 					
+					 if (file.getData() == null) {
+						 
+						 file.setFileName(String.valueOf("0"));
+					 }else{
+						file.setFileName(String.valueOf(d.getTime()+".png" ));
+						 
+					 }					
 				
-					file.setFileName(String.valueOf(d.getTime()+".png" ));
+				
 					String imageName =  String.valueOf(file.getFileName());
 			
 					

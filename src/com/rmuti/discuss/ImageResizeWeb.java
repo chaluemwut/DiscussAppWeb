@@ -33,7 +33,7 @@ public class ImageResizeWeb {
 
 	}
 
-	private static BufferedImage resizeImage(BufferedImage originalImage,
+	public static BufferedImage resizeImage(BufferedImage originalImage,
 			int type) {
 		BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT,
 				type);
@@ -44,7 +44,7 @@ public class ImageResizeWeb {
 		return resizedImage;
 	}
 
-	private static BufferedImage resizeImageWithHint(
+	public static BufferedImage resizeImageWithHint(
 			BufferedImage originalImage, int type) {
 
 		BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT,

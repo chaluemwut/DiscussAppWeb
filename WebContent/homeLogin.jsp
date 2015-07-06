@@ -276,7 +276,7 @@ if(u == null){
         			{
         				// คำนวณหาข้อมูลเริ่มต้นในฐานข้อมูล
         				start = (screen-1)*row_page;
-        				String sql = "SELECT topic_id,cat_id,topic,description,owner,date_time,img,top_id,num_reply  FROM post ORDER BY topic_id DESC LIMIT "+start+","+row_page;
+        				String sql = "SELECT * FROM post INNER JOIN cat_id ON post.cat_id = cat_id.cat_id ORDER BY topic_id DESC LIMIT "+start+","+row_page;
         				ResultSet myresult = stmt.executeQuery(sql);
         				// ขั้นตอนที่ 4 จัดการกับผลลัพธ์ที่ได้จากคำสั่ง SQL
         				//out.println("<center><b>สมุดเยี่ยมชม<br>");
@@ -290,6 +290,7 @@ if(u == null){
         		               
         		                <th></th>
         		                <th>ชื่อกระทู้</th>
+        		                <th>ประเภทกระทู้</th>
         		                <th>ชื่อคนโพส</th>
         		                <th>จำนวนตอบ-วันที่โพส</th>  
         		                  
@@ -313,13 +314,18 @@ if(u == null){
         					<tbody>
         		    						<tr  >
         		    						
-        		    						<TD>
-        		    						 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
-        		    						</TD>
+        		    							<TD><%if (img.equals("0")){%>
+    		    								 <img src=<%="img/noimage.jpg"%> class="img-responsive" width="70" height="70">
+    		    							 
+    		    								<% }else{%>  		    						
+    		    						
+    		    								 <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
+    		    						 		<%} %>
         		    						<TD>
         		    						<A HREF="<%= url %>">						
         		    						<%= new String(myresult.getString("topic").getBytes()) %></A>
         		    						</TD>
+        		    							<TD><%= new String(myresult.getString("cat_topic").getBytes()) %></TD>
         		    							<TD><%= new String(myresult.getString("owner").getBytes()) %></TD>
         		    						<TD>
         		    						(<%= myresult.getInt("num_reply") %>-<%= myresult.getString("date_time") %>)

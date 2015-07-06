@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.rmuti.Config;
+import com.rmuti.discuss.ImageResizeWeb;
 
 import javazoom.upload.MultipartFormDataRequest;
 import javazoom.upload.UploadBean;
@@ -81,7 +82,7 @@ public class SendImage extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(true);
-		
+		ImageResizeWeb imageResizeWeb =new ImageResizeWeb();
 		
 		
 		//String u = (String) request.getSession().getAttribute("userid");
@@ -128,7 +129,7 @@ public class SendImage extends HttpServlet {
 	 String imgGetName =  String.valueOf(file.getFileName());
 	 up.setFolderstore(Config.path_file);
 		up.store(mul);
-		 
+		imageResizeWeb.getImageResize(imgGetName);
 		try {		
 			
 

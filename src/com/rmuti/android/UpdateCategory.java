@@ -98,6 +98,7 @@ public class UpdateCategory extends HttpServlet {
 					if(stmt!=null){
 						stmt.close();
 						con.close();
+						con.close();
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

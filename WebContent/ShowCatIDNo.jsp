@@ -170,9 +170,17 @@ background-repeat: no-repeat; }
 %>				
  <tr bgcolor="pink">
                   
-                 
+                  
+                  	<td><%if (img.equals("0")){%>
+    		    			 <img src=<%="img/noimage.jpg"%> class="img-responsive" width="70" height="70">&nbsp; Top
+    		    							 
+    		    			<% }else{%>  		    						
+    		    						
+    		    		      <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">&nbsp; Top
+    		    			 <%} %>
+                  	<td>
 			       	        
-			        <td><img src=<%="images/"+img%> class="img-responsive" width="70" height="70">&nbsp; Top<td>
+			       
 					<td><A  HREF="<%= url %>"> <%= new String(rs2.getString("topic").getBytes()) %></A></td>					
 				     <td><%= new String(rs2.getString("owner").getBytes()) %></td>					
 					 <td><%= new String(rs2.getString("num_reply").getBytes()) %></td>
@@ -207,10 +215,17 @@ background-repeat: no-repeat; }
 %>
  <tr >
                   
-                 
+                    <td><%if (img.equals("0")){%>
+    		    			 <img src=<%="img/noimage.jpg"%> class="img-responsive" width="70" height="70">
+    		    							 
+    		    			<% }else{%>  		    						
+    		    						
+    		    		      <img src=<%="images/"+img%> class="img-responsive" width="70" height="70">
+    		    			 <%} %>
+                  	<td>
 			       	  
 			       	     
-			        <td><img src=<%="images/"+img%> class="img-responsive" width="70" height="70"><td>
+			       
 					<td><A  HREF="<%= url %>"> <%= new String(rs3.getString("topic").getBytes()) %></A></td>					
 				     <td><%= new String(rs3.getString("owner").getBytes()) %></td>					
 					 <td><%= new String(rs3.getString("num_reply").getBytes()) %></td>
